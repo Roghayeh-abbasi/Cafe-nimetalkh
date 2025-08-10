@@ -1,0 +1,155 @@
+.profile-container {
+  display: flex;
+  min-height: 100vh;
+  direction: rtl;
+  background: url('/assets/imge/pexels-joshsorenson-990439.jpg') no-repeat center center/cover;
+}
+
+.profile-sidebar {
+  width: 350px;
+  background: #f8f8f8;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+  position: sticky;
+  /* height: calc(100vh); */
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+}
+
+.profile-sidebar h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #2e1606;
+}
+
+.profile-tabs {
+  list-style: none;
+  padding: 0;
+}
+
+.profile-tabs li {
+  margin-bottom: 10px;
+}
+
+.profile-tabs li a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #2e1606;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-tabs li.active a {
+  background: #d97706;
+  color: white;
+}
+
+.profile-tabs li a:hover {
+  background: #f0e4d7;
+}
+
+.profile-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.toggle-sidebar-btn {
+  display: none;
+  position: fixed;
+  top: 6px;
+  right: 22px;
+  background-color: #843F15;
+  border: none;
+  border-radius: 5px;
+  padding: 6px;
+  cursor: pointer;
+  z-index: 1002;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger-icon {
+  width: 24px;
+  height: 2px;
+  background-color: #FFFFFF !important;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: #FFFFFF !important;
+  transition: transform 0.3s ease, top 0.3s ease;
+}
+
+.hamburger-icon::before {
+  top: -8px;
+  left: 0;
+}
+
+.hamburger-icon::after {
+  top: 8px;
+  left: 0;
+}
+
+.toggle-sidebar-btn.open .hamburger-icon {
+  background-color: transparent !important;
+}
+
+.toggle-sidebar-btn.open .hamburger-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.toggle-sidebar-btn.open .hamburger-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+  }
+
+  .profile-sidebar {
+    position: fixed;
+    right: 0;
+    width: 250px;
+    height: calc(100vh);
+    transform: translateX(100%);
+    z-index: 1001;
+  }
+
+  .profile-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .toggle-sidebar-btn {
+    display: flex;
+  }
+
+  .profile-content {
+    padding-top: 60px;
+  }
+
+  .profile-sidebar h2 {
+    font-size: 20px;
+  }
+
+  .profile-tabs li a {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) {
+  .profile-sidebar {
+    transform: translateX(0) !important;
+  }
+}

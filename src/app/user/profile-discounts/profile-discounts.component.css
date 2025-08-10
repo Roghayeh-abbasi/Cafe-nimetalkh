@@ -1,0 +1,116 @@
+@import '../../../assets/styles/profile-shared.css';
+
+.discount-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.discount-item {
+  background: linear-gradient(135deg, rgba(38, 28, 21, 0.15), rgba(245, 230, 204, 0.2));
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.discount-item:hover {
+  transform: scale(1.03);
+  background: linear-gradient(135deg, rgba(38, 28, 21, 0.25), rgba(245, 230, 204, 0.3));
+}
+
+.discount-details {
+  flex: 1;
+}
+
+.discount-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.discount-title i {
+  color: #bda274;
+  font-size: 1.2rem;
+}
+
+.discount-title strong {
+  color: #bda274;
+  font-size: 1.1rem;
+}
+
+.discount-description {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 4px 0;
+}
+
+.status {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.status.expired {
+  color: #ef4444;
+}
+
+.progress-bar {
+  height: 6px;
+  background-color: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #bda274, #3b6b5a);
+  transition: width 0.5s ease;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 4px;
+  text-align: right;
+}
+
+.btn-copy {
+  background-color: #3b6b5a;
+  color: white;
+  padding: 8px 12px;
+}
+
+.btn-copy:hover {
+  background-color: #2f5548;
+  transform: translateY(-2px);
+}
+
+.btn-delete {
+  background-color: #ef4444;
+  color: white;
+  padding: 8px 12px;
+}
+
+.btn-delete:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+}
+
+.no-discounts {
+  text-align: center;
+  padding: 24px;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.no-discounts i {
+  font-size: 2.5rem;
+  color: #bda274;
+  margin-bottom: 12px;
+}

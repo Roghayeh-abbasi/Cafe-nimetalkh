@@ -1,0 +1,72 @@
+<div class="users-container" dir="rtl">
+  <h3>مدیریت کاربران</h3>
+
+  <div class="add-user-form">
+    <input
+      type="text"
+      [(ngModel)]="newUser.username"
+      placeholder="نام کاربری"
+      class="form-input"
+    />
+    <input
+      type="email"
+      [(ngModel)]="newUser.email"
+      placeholder="ایمیل"
+      class="form-input"
+    />
+    <select [(ngModel)]="newUser.role" class="form-input">
+      <option value="user">کاربر</option>
+      <option value="admin">ادمین</option>
+    </select>
+    <button (click)="addUser()" class="add-btn">افزودن کاربر</button>
+  </div>
+
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="filterUsers()"
+    placeholder="جستجوی نام یا ایمیل"
+    class="form-input search-input"
+  />
+
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th>نام کاربری</th>
+        <th>ایمیل</th>
+        <th>نقش</th>
+        <th>عملیات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filterUsers(); let i = index">
+        <td *ngIf="editingIndex !== i">{{ user.username }}</td>
+        <td *ngIf="editingIndex === i">
+          <input type="text" [(ngModel)]="editedUser.username" class="edit-input" />
+        </td>
+        <td *ngIf="editingIndex !== i">{{ user.email }}</td>
+        <td *ngIf="editingIndex === i">
+          <input type="email" [(ngModel)]="editedUser.email" class="edit-input" />
+        </td>
+        <td *ngIf="editingIndex !== i">{{ user.role }}</td>
+        <td *ngIf="editingIndex === i">
+          <select [(ngModel)]="editedUser.role" class="edit-input">
+            <option value="user">کاربر</option>
+            <option value="admin">ادمین</option>
+          </select>
+        </td>
+        <td>
+          <button *ngIf="editingIndex !== i" (click)="editUser(i)" class="edit-btn">ویرایش</button>
+          <div *ngIf="editingIndex === i" class="edit-controls">
+            <button (click)="saveEdit()" class="save-btn">ذخیره</button>
+            <button (click)="cancelEdit()" class="cancel-btn">لغو</button>
+          </div>
+          <button *ngIf="editingIndex !== i" (click)="deleteUser(i)" class="delete-btn">حذف</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="showSuccess" class="success-message">عملیات با موفقیت انجام شد!</div>
+  <div *ngIf="users.length === 0 && !searchTerm" class="no-users">هیچ کاربری وجود ندارد.</div>
+</div>

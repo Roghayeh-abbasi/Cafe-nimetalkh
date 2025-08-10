@@ -1,0 +1,116 @@
+.admin-panel {
+  display: flex;
+  height: 100vh;
+  direction: rtl;
+  background-image: url('/assets/imge/sun.jpg');
+  min-height: 100vh;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sidebar {
+  width: 260px;
+  background: #261C15; 
+  padding: 30px;
+  color: #E4E2E0; /* خاکستری مایل به بژ برای متن */
+  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  direction: rtl;
+}
+
+.sidebar li {
+  margin: 20px 0;
+  text-align: right;
+  position: relative;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #E4E2E0;
+  display: block;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.sidebar a:hover {
+  color: #F28A6E; /* مرجانی گرم */
+  background-color: rgba(242, 138, 110, 0.15);
+  transform: scale(1.05);
+}
+
+.content {
+  flex: 1;
+  padding: 40px;
+  direction: rtl;
+  background: url('/assets/imge/sun.jpg') no-repeat center center/cover;
+  box-shadow: -3px 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 15px 0 0 15px;
+  overflow-y: auto;
+  transition: all 0.4s ease;
+  animation: slideInContent 0.5s ease-out;
+}
+
+@keyframes slideInContent {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.content h1, .content h2, .content h3 {
+  color: #261C15; /* قهوه‌ای برشته */
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .admin-panel {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+    animation: none;
+  }
+
+  .sidebar a {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+
+  .content {
+    padding: 20px;
+    border-radius: 0;
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar a {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .content {
+    padding: 15px;
+  }
+}

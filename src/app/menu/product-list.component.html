@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>{{ category ? (category | titlecase) : 'همه محصولات' }}</h2>
+  <div class="products-grid">
+    <div *ngFor="let product of products | categoryFilter:category" class="product-card">
+      <img [src]="product.image" [alt]="product.name" class="product-image">
+      <h3 class="product-name">{{ product.name }}</h3>
+      <p class="product-description">{{ product.description }}</p>
+      <p class="price" *ngIf="product.discount && product.discount > 0">
+        <span class="original-price">{{ product.price }} تومان</span>
+        <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+        <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+      </p>
+      <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+      <button (click)="addToCart(product)" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="container">
+  <h2>{{ category ? (category | titlecase) : 'همه محصولات' }}</h2>
+  <div class="products-grid">
+    <div *ngFor="let product of products | categoryFilter:category" class="product-card">
+      <img [src]="product.image" [alt]="product.name" class="product-image">
+      <h3 class="product-name">{{ product.name }}</h3>
+      <p class="product-description">{{ product.description }}</p>
+      <p class="price" *ngIf="product.discount && product.discount > 0">
+        <span class="original-price">{{ product.price }} تومان</span>
+        <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+        <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+      </p>
+      <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+      <button (click)="addToCart(product)" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- <div class="container">
+  <h2>{{ category ? (category | titlecase) : 'همه محصولات' }}</h2>
+  <div class="products-grid">
+    <div *ngFor="let product of products | categoryFilter:category" class="product-card">
+      <img [src]="product.image" [alt]="product.name" class="product-image">
+      <h3 class="product-name">{{ product.name }}</h3>
+      <p class="product-description">{{ product.description }}</p>
+      <p class="product-price">{{ product.price }} تومان</p>
+      <button (click)="addToCart(product)" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+    </div>
+  </div>
+</div> -->

@@ -1,0 +1,81 @@
+
+   <div class="profile-box">
+    <h1 class="profile-subtitle">اطلاعات شخصی</h1>
+
+    <div class="form-group" *ngIf="!isEditing">
+
+      <div class="profile-image-container">
+        <img *ngIf="user.profilePicture" [src]="user.profilePicture" alt="تصویر پروفایل" class="profile-image" />
+        <div *ngIf="!user.profilePicture" class="profile-image-placeholder">
+          <span class="material-icons">person</span>
+        </div>
+        <!-- <h3 class="user-name">{{ user.firstName }} {{ user.lastName }}</h3> -->
+      </div>
+
+      <div class="info-card">
+        <div class="input-label">
+          <label><span class="material-icons">email</span> ایمیل</label>
+          <p>{{ user.email }}</p>
+        </div>
+        <div class="input-label">
+          <label><span class="material-icons">phone</span> شماره تلفن</label>
+          <p>{{ user.phone || 'ثبت نشده' }}</p>
+        </div>
+      </div>
+
+      <div class="info-card loyalty-section">
+        <h4><span class="material-icons">star</span> امتیازات وفاداری</h4>
+        <p>{{ user.loyaltyPoints || 0 }} امتیاز</p>
+        <p class="discount-info" *ngIf="user.loyaltyPoints >= 100">شما واجد شرایط تخفیف 10٪ هستید!</p>
+      </div>
+
+      <div class="info-card reservation-section">
+        <h4><span class="material-icons">event</span> آخرین رزرو</h4>
+        <p *ngIf="user.lastReservation; else noReservation">
+          {{ user.lastReservation.date | date:'medium' }} - میز {{ user.lastReservation.table }} ({{ user.lastReservation.status }})
+        </p>
+        <ng-template #noReservation>
+          <p>رزروی ثبت نشده است.</p>
+        </ng-template>
+      </div>
+
+      <button class="btn btn-update" (click)="toggleEdit()" title="ویرایش اطلاعات شخصی">ویرایش اطلاعات</button>
+    </div>
+
+    <form #editForm="ngForm" *ngIf="isEditing" (ngSubmit)="saveProfile()" class="edit-form">
+      <div class="form-group">
+        <div class="input-label">
+          <label for="firstName"><span class="material-icons">person</span> نام</label>
+          <input id="firstName" class="input-field" [(ngModel)]="user.firstName" name="firstName" required placeholder="نام خود را وارد کنید" minlength="2" />
+          <span class="error-message" *ngIf="editForm.controls['firstName']?.touched && editForm.controls['firstName']?.errors?.['required']">نام الزامی است</span>
+          <span class="error-message" *ngIf="editForm.controls['firstName']?.touched && editForm.controls['firstName']?.errors?.['minlength']">نام حداقل باید 2 کاراکتر باشد</span>
+        </div>
+        <div class="input-label">
+          <label for="lastName"><span class="material-icons">person</span> نام خانوادگی</label>
+          <input id="lastName" class="input-field" [(ngModel)]="user.lastName" name="lastName" required placeholder="نام خانوادگی خود را وارد کنید" minlength="2" />
+          <span class="error-message" *ngIf="editForm.controls['lastName']?.touched && editForm.controls['lastName']?.errors?.['required']">نام خانوادگی الزامی است</span>
+          <span class="error-message" *ngIf="editForm.controls['lastName']?.touched && editForm.controls['lastName']?.errors?.['minlength']">نام خانوادگی حداقل باید 2 کاراکتر باشد</span>
+        </div>
+        <div class="input-label">
+          <label for="email"><span class="material-icons">email</span> ایمیل</label>
+          <input id="email" class="input-field" [(ngModel)]="user.email" name="email" type="email" required placeholder="ایمیل خود را وارد کنید" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+          <span class="error-message" *ngIf="editForm.controls['email']?.touched && editForm.controls['email']?.errors?.['required']">ایمیل الزامی است</span>
+          <span class="error-message" *ngIf="editForm.controls['email']?.touched && editForm.controls['email']?.errors?.['pattern']">ایمیل نامعتبر است</span>
+        </div>
+        <div class="input-label">
+          <label for="phone"><span class="material-icons">phone</span> شماره تلفن</label>
+          <input id="phone" class="input-field" [(ngModel)]="user.phone" name="phone" type="tel" placeholder="شماره تلفن (اختیاری)" pattern="09[0-9]{9}" />
+          <span class="error-message" *ngIf="editForm.controls['phone']?.touched && editForm.controls['phone']?.errors?.['pattern']">شماره تلفن باید 11 رقم و با 09 شروع شود</span>
+        </div>
+        <div class="input-label">
+          <label for="profilePicture"><span class="material-icons">image</span> تصویر پروفایل</label>
+          <input id="profilePicture" type="file" (change)="onFileSelected($event)" accept="image/*" />
+          <img *ngIf="user.profilePicture" [src]="user.profilePicture" alt="پیش‌نمایش تصویر" class="profile-image-preview" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-update" [disabled]="!editForm.valid">ذخیره تغییرات</button>
+          <button type="button" class="btn" (click)="toggleEdit()">لغو</button>
+        </div>
+      </div>
+    </form>
+    </div>

@@ -1,0 +1,124 @@
+<div class="products-container" dir="rtl">
+  <h3>مدیریت محصولات</h3>
+
+  <!-- فرم افزودن محصول -->
+  <div class="add-product-form">
+    <input
+      type="text"
+      [(ngModel)]="newProduct.name"
+      placeholder="نام محصول"
+      class="form-input"
+    />
+    <input
+      type="number"
+      [(ngModel)]="newProduct.price"
+      placeholder="قیمت (تومان)"
+      class="form-input"
+      min="0"
+    />
+    <input
+      type="number"
+      [(ngModel)]="newProduct.discount"
+      placeholder="تخفیف (%)"
+      class="form-input"
+      min="0"
+      max="100"
+    />
+    <input
+      type="text"
+      [(ngModel)]="newProduct.category"
+      placeholder="دسته‌بندی"
+      class="form-input"
+    />
+    <button (click)="addProduct()" class="add-btn">افزودن محصول</button>
+  </div>
+
+  <!-- جستجو -->
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="filterProducts()"
+    placeholder="جستجوی نام یا دسته‌بندی"
+    class="form-input search-input"
+  />
+
+  <!-- جدول محصولات -->
+  <table class="products-table">
+    <thead>
+      <tr>
+        <th>نام محصول</th>
+        <th>قیمت (تومان)</th>
+        <th>تخفیف (%)</th>
+        <th>دسته‌بندی</th>
+        <th>عملیات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of filterProducts(); let i = index">
+        <td *ngIf="editingIndex !== i">{{ product.name }}</td>
+        <td *ngIf="editingIndex === i">
+          <input
+            type="text"
+            [(ngModel)]="editedProduct.name"
+            class="edit-input"
+          />
+        </td>
+        <td *ngIf="editingIndex !== i">{{ product.price }}</td>
+        <td *ngIf="editingIndex === i">
+          <input
+            type="number"
+            [(ngModel)]="editedProduct.price"
+            class="edit-input"
+            min="0"
+          />
+        </td>
+        <td *ngIf="editingIndex !== i">{{ product.discount }}</td>
+        <td *ngIf="editingIndex === i">
+          <input
+            type="number"
+            [(ngModel)]="editedProduct.discount"
+            class="edit-input"
+            min="0"
+            max="100"
+          />
+        </td>
+        <td *ngIf="editingIndex !== i">{{ product.category }}</td>
+        <td *ngIf="editingIndex === i">
+          <input
+            type="text"
+            [(ngModel)]="editedProduct.category"
+            class="edit-input"
+          />
+        </td>
+        <td>
+          <button
+            *ngIf="editingIndex !== i"
+            (click)="editProduct(i)"
+            class="edit-btn"
+          >
+            ویرایش
+          </button>
+          <div *ngIf="editingIndex === i" class="edit-controls">
+            <button (click)="saveEdit()" class="save-btn">ذخیره</button>
+            <button (click)="cancelEdit()" class="cancel-btn">لغو</button>
+          </div>
+          <button
+            *ngIf="editingIndex !== i"
+            (click)="deleteProduct(i)"
+            class="delete-btn"
+          >
+            حذف
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- پیام موفقیت یا خطا -->
+  <div *ngIf="showSuccess" class="success-message">
+    عملیات با موفقیت انجام شد!
+  </div>
+  <div *ngIf="products.length === 0 && !searchTerm" class="no-products">
+    هیچ محصولی وجود ندارد.
+  </div>
+</div>

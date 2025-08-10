@@ -1,0 +1,185 @@
+<div class="orders-container" dir="rtl" role="region" aria-labelledby="orders-title">
+  <h3 id="orders-title">مدیریت سفارشات کاربران</h3>
+
+  <!-- Search and Clear All -->
+  <div class="search-controls">
+    <div class="input-label">
+      <label for="search-term">جستجوی سفارش</label>
+      <input
+        id="search-term"
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="filterOrders()"
+        placeholder="جستجوی شناسه یا نام مشتری"
+        class="form-input search-input"
+        aria-label="جستجوی سفارشات"
+      />
+    </div>
+    <button
+      class="clear-btn"
+      (click)="clearAllOrders()"
+      *ngIf="orders.length > 0"
+      aria-label="حذف همه سفارشات"
+    >
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#fff"/>
+      </svg>
+      حذف همه سفارشات
+    </button>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="table-container">
+    <p class="orders-count" *ngIf="filteredOrders.length > 0">
+      تعداد سفارشات: {{ filteredOrders.length }}
+    </p>
+    <table class="orders-table" *ngIf="filteredOrders.length > 0; else noOrders">
+      <thead>
+        <tr>
+          <th (click)="sortOrders('orderId')" class="sortable" role="button" aria-label="مرتب‌سازی بر اساس شناسه سفارش">
+            شناسه سفارش
+            <span class="sort-icon" *ngIf="sortField === 'orderId'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="sortOrders('customerName')" class="sortable" role="button" aria-label="مرتب‌سازی بر اساس نام مشتری">
+            نام مشتری
+            <span class="sort-icon" *ngIf="sortField === 'customerName'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="sortOrders('amount')" class="sortable" role="button" aria-label="مرتب‌سازی بر اساس مبلغ">
+            مبلغ (تومان)
+            <span class="sort-icon" *ngIf="sortField === 'amount'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="sortOrders('date')" class="sortable" role="button" aria-label="مرتب‌سازی بر اساس تاریخ">
+            تاریخ ثبت
+            <span class="sort-icon" *ngIf="sortField === 'date'">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th aria-hidden="true">عملیات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of filteredOrders; let i = index" @fadeIn>
+          <td *ngIf="editingIndex !== i">{{ order.orderId }}</td>
+          <td *ngIf="editingIndex === i">
+            <input
+              type="text"
+              [(ngModel)]="editedOrder.orderId"
+              class="edit-input"
+              [ngClass]="{'invalid': editError && !editedOrder.orderId}"
+              (input)="validateEdit()"
+              aria-label="ویرایش شناسه سفارش"
+            />
+          </td>
+          <td *ngIf="editingIndex !== i">{{ order.customerName }}</td>
+          <td *ngIf="editingIndex === i">
+            <input
+              type="text"
+              [(ngModel)]="editedOrder.customerName"
+              class="edit-input"
+              [ngClass]="{'invalid': editError && !editedOrder.customerName}"
+              (input)="validateEdit()"
+              aria-label="ویرایش نام مشتری"
+            />
+          </td>
+          <td *ngIf="editingIndex !== i">{{ order.amount | number:'1.0-0' }}</td>
+          <td *ngIf="editingIndex === i">
+            <input
+              type="number"
+              [(ngModel)]="editedOrder.amount"
+              class="edit-input"
+              min="0"
+              [ngClass]="{'invalid': editError && editedOrder.amount < 0}"
+              (input)="validateEdit()"
+              aria-label="ویرایش مبلغ سفارش"
+            />
+          </td>
+          <td *ngIf="editingIndex !== i">{{ order.date | date:'short' }}</td>
+          <td *ngIf="editingIndex === i">
+            <input
+              type="date"
+              [(ngModel)]="editedOrder.date"
+              class="edit-input"
+              [ngClass]="{'invalid': editError && !editedOrder.date}"
+              (input)="validateEdit()"
+              aria-label="ویرایش تاریخ سفارش"
+            />
+          </td>
+          <td>
+            <div class="edit-controls">
+              <button
+                *ngIf="editingIndex !== i"
+                (click)="editOrder(i)"
+                class="edit-btn"
+                title="ویرایش"
+                aria-label="ویرایش سفارش"
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#fff"/>
+                </svg>
+                ویرایش
+              </button>
+              <div *ngIf="editingIndex === i" class="button-group">
+                <button
+                  (click)="saveEdit()"
+                  class="save-btn"
+                  [disabled]="editError || !editedOrder.orderId || !editedOrder.customerName || editedOrder.amount < 0 || !editedOrder.date"
+                  aria-label="ذخیره تغییرات"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                    <path d="M9 16.2l-3.5-3.5L6.91 11.3 9 13.39l8.09-8.09L18.5 6.7 9 16.2z" fill="#fff"/>
+                  </svg>
+                  ذخیره
+                </button>
+                <button (click)="cancelEdit()" class="cancel-btn" aria-label="لغو ویرایش">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" fill="#fff"/>
+                  </svg>
+                  لغو
+                </button>
+              </div>
+              <button
+                *ngIf="editingIndex !== i"
+                (click)="deleteOrder(i)"
+                class="delete-btn"
+                title="حذف"
+                aria-label="حذف سفارش"
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#fff"/>
+                </svg>
+                حذف
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noOrders>
+      <div class="no-orders">
+        <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true">
+          <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 21.96 4H5.21L4.27 2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" fill="#bda274"/>
+        </svg>
+        <p>هیچ سفارشی ثبت نشده است.</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Custom Alert -->
+  <div class="custom-alert" *ngIf="showAlert" @alertAnimation>
+    <div class="alert-content {{ alertType }}">
+      <p>{{ alertMessage }}</p>
+      <button class="close-btn" (click)="showAlert = false" aria-label="بستن اعلان">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" fill="#2e1606"/>
+        </svg>
+        بستن
+      </button>
+    </div>
+  </div>
+</div>

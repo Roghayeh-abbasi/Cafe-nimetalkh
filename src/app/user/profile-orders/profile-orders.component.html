@@ -1,0 +1,198 @@
+
+<div class="profile-box">
+  <h2>سفارش‌های من</h2>
+
+  <!-- تعداد کل سفارش‌ها -->
+  <p>تعداد کل سفارش‌ها: {{ orders.length }}</p>
+
+  <!-- نمودار دایره‌ای -->
+  <div class="chart-container">
+    <canvas id="ordersChart"></canvas>
+  </div>
+
+  <!-- بخش سفارش‌های تحویل شده -->
+  <div class="order-section">
+    <h3 (click)="toggleSection('delivered')" class="section-header">
+      تحویل شده ({{ deliveredOrders.length }})
+      <span class="toggle-icon">
+        <svg *ngIf="!showDelivered" class="icon" viewBox="0 0 24 24">
+          <path d="M19 7l-7 7-7-7" stroke="#4a2f1a" stroke-width="2" fill="none"/>
+        </svg>
+        <svg *ngIf="showDelivered" class="icon" viewBox="0 0 24 24">
+          <path d="M19 17l-7-7-7 7" stroke="#4a2f1a" stroke-width="2" fill="none"/>
+        </svg>
+      </span>
+    </h3>
+    <div class="section-content" [ngClass]="{ 'collapsed': !showDelivered }">
+      <table *ngIf="deliveredOrders.length > 0">
+        <thead>
+          <tr>
+            <th>شماره سفارش</th>
+            <th>تاریخ</th>
+            <th>وضعیت</th>
+            <th>مبلغ کل</th>
+            <th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let order of deliveredOrders; trackBy: trackByOrder">
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.date }}</td>
+              <td class="delivered">{{ order.status }}</td>
+              <td>{{ order.total | currency:'IRR' }}</td>
+              <td>
+                <button (click)="toggleDetails(order)">جزئیات</button>
+              </td>
+            </tr>
+            <tr *ngIf="order.showDetails" class="details-row">
+              <td colspan="5">
+                <div class="order-details">
+                  <h3>جزئیات سفارش {{ order.id }}</h3>
+                  <p><strong>نوع سفارش:</strong> {{ order.orderType }}</p>
+                  <p *ngIf="order.orderType === 'حضوری'"><strong>شماره میز:</strong> {{ order.tableNumber || 'مشخص نشده' }}</p>
+                  <p *ngIf="order.orderType === 'ارسال'"><strong>آدرس تحویل:</strong> {{ order.deliveryAddress || 'مشخص نشده' }}</p>
+                  <p><strong>یادداشت مشتری:</strong> {{ order.customerNote || 'بدون یادداشت' }}</p>
+                  <p><strong>زمان ثبت سفارش:</strong> {{ order.orderTime }}</p>
+                  <p *ngIf="order.orderType === 'ارسال'"><strong>وضعیت ارسال:</strong> {{ order.deliveryStatus || 'در حال آماده‌سازی' }}</p>
+                  <strong>محصولات سفارش:</strong>
+                  <ul>
+                    <li *ngFor="let item of order.items">
+                      {{ item.name }} (تعداد: {{ item.quantity }}) - {{ item.price | currency:'IRR' }}
+                      <span *ngIf="item.customizations"> - شخصی‌سازی: {{ item.customizations }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <p *ngIf="deliveredOrders.length === 0">هیچ سفارش تحویل‌شده‌ای یافت نشد.</p>
+    </div>
+  </div>
+
+  <!-- بخش سفارش‌های در انتظار -->
+  <div class="order-section">
+    <h3 (click)="toggleSection('pending')" class="section-header">
+      در انتظار ({{ pendingOrders.length }})
+      <span class="toggle-icon">
+        <svg *ngIf="!showPending" class="icon" viewBox="0 0 24 24">
+          <path d="M19 7l-7 7-7-7" stroke="#4a2f1a" stroke-width="2" fill="none"/>
+        </svg>
+        <svg *ngIf="showPending" class="icon" viewBox="0 0 24 24">
+          <path d="M19 17l-7-7-7 7" stroke="#4a2f1a" stroke-width="2" fill="none"/>
+        </svg>
+      </span>
+    </h3>
+    <div class="section-content" [ngClass]="{ 'collapsed': !showPending }">
+      <table *ngIf="pendingOrders.length > 0">
+        <thead>
+          <tr>
+            <th>شماره سفارش</th>
+            <th>تاریخ</th>
+            <th>وضعیت</th>
+            <th>مبلغ کل</th>
+            <th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let order of pendingOrders; trackBy: trackByOrder">
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.date }}</td>
+              <td class="pending">{{ order.status }}</td>
+              <td>{{ order.total | currency:'IRR' }}</td>
+              <td>
+                <button (click)="toggleDetails(order)">جزئیات</button>
+              </td>
+            </tr>
+            <tr *ngIf="order.showDetails" class="details-row">
+              <td colspan="5">
+                <div class="order-details">
+                  <h3>جزئیات سفارش {{ order.id }}</h3>
+                  <p><strong>نوع سفارش:</strong> {{ order.orderType }}</p>
+                  <p *ngIf="order.orderType === 'حضوری'"><strong>شماره میز:</strong> {{ order.tableNumber || 'مشخص نشده' }}</p>
+                  <p *ngIf="order.orderType === 'ارسال'"><strong>آدرس تحویل:</strong> {{ order.deliveryAddress || 'مشخص نشده' }}</p>
+                  <p><strong>یادداشت مشتری:</strong> {{ order.customerNote || 'بدون یادداشت' }}</p>
+                  <p><strong>زمان ثبت سفارش:</strong> {{ order.orderTime }}</p>
+                  <p *ngIf="order.orderType === 'ارسال'"><strong>وضعیت ارسال:</strong> {{ order.deliveryStatus || 'در حال آماده‌سازی' }}</p>
+                  <strong>محصولات سفارش:</strong>
+                  <ul>
+                    <li *ngFor="let item of order.items">
+                      {{ item.name }} (تعداد: {{ item.quantity }}) - {{ item.price | currency:'IRR' }}
+                      <span *ngIf="item.customizations"> - شخصی‌سازی: {{ item.customizations }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <p *ngIf="pendingOrders.length === 0">هیچ سفارش در انتظاری یافت نشد.</p>
+    </div>
+  </div>
+
+  <!-- بخش سفارش‌های لغو شده -->
+  <div class="order-section">
+    <h3 (click)="toggleSection('canceled')" class="section-header">
+      لغو شده ({{ canceledOrders.length }})
+      <span class="toggle-icon">
+        <svg *ngIf="!showCanceled" class="icon" viewBox="0 0 24 24">
+          <path d="M19 7l-7 7-7-7" stroke="#4a2f1a" stroke-width="2" fill="none"/>
+        </svg>
+        <svg *ngIf="showCanceled" class="icon" viewBox="0 0 24 24">
+          <path d="M19 17l-7-7-7 7" stroke="#4a2f1a" stroke-width="2" fill="none"/>
+        </svg>
+      </span>
+    </h3>
+    <div class="section-content" [ngClass]="{ 'collapsed': !showCanceled }">
+      <table *ngIf="canceledOrders.length > 0">
+        <thead>
+          <tr>
+            <th>شماره سفارش</th>
+            <th>تاریخ</th>
+            <th>وضعیت</th>
+            <th>مبلغ کل</th>
+            <th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let order of canceledOrders; trackBy: trackByOrder">
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.date }}</td>
+              <td class="canceled">{{ order.status }}</td>
+              <td>{{ order.total | currency:'IRR' }}</td>
+              <td>
+                <button (click)="toggleDetails(order)">جزئیات</button>
+              </td>
+            </tr>
+            <tr *ngIf="order.showDetails" class="details-row">
+              <td colspan="5">
+                <div class="order-details">
+                  <h3>جزئیات سفارش {{ order.id }}</h3>
+                  <p><strong>نوع سفارش:</strong> {{ order.orderType }}</p>
+                  <p *ngIf="order.orderType === 'حضوری'"><strong>شماره میز:</strong> {{ order.tableNumber || 'مشخص نشده' }}</p>
+                  <p *ngIf="order.orderType === 'ارسال'"><strong>آدرس تحویل:</strong> {{ order.deliveryAddress || 'مشخص نشده' }}</p>
+                  <p><strong>یادداشت مشتری:</strong> {{ order.customerNote || 'بدون یادداشت' }}</p>
+                  <p><strong>زمان ثبت سفارش:</strong> {{ order.orderTime }}</p>
+                  <p *ngIf="order.orderType === 'ارسال'"><strong>وضعیت ارسال:</strong> {{ order.deliveryStatus || 'در حال آماده‌سازی' }}</p>
+                  <strong>محصولات سفارش:</strong>
+                  <ul>
+                    <li *ngFor="let item of order.items">
+                      {{ item.name }} (تعداد: {{ item.quantity }}) - {{ item.price | currency:'IRR' }}
+                      <span *ngIf="item.customizations"> - شخصی‌سازی: {{ item.customizations }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <p *ngIf="canceledOrders.length === 0">هیچ سفارش لغو‌شده‌ای یافت نشد.</p>
+    </div>
+  </div>
+</div>

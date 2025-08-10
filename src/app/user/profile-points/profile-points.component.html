@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="profile-box" role="region" aria-labelledby="profile-points-title">
+    <h2 id="profile-points-title" class="profile-title">امتیازهای شما</h2>
+
+    <!-- Score Statistics -->
+    <div class="score-stats" *ngIf="scores.length > 0">
+      <div class="stats-card">
+        <i class="fas fa-star"></i>
+        <p>مجموع امتیازها: <strong>{{ totalPoints }}</strong></p>
+      </div>
+      <div class="stats-card">
+        <i class="fas fa-trophy"></i>
+        <p>تعداد پاداش‌ها: <strong>{{ scores.length }}</strong></p>
+      </div>
+      <div class="stats-card">
+        <i class="fas fa-gift"></i>
+        <p>وضعیت: <strong>{{ rewardStatus }}</strong></p>
+      </div>
+    </div>
+
+    <!-- Redeem Points -->
+    <div class="redeem-section" *ngIf="totalPoints >= 100">
+      <p>شما {{ totalPoints }} امتیاز دارید! می‌توانید از آن‌ها برای دریافت تخفیف استفاده کنید.</p>
+      <button class="btn btn-redeem" (click)="redeemPoints()" [disabled]="isRedeeming">
+        <span *ngIf="isRedeeming" class="spinner"></span>
+        {{ isRedeeming ? 'در حال پردازش...' : 'دریافت تخفیف' }}
+      </button>
+    </div>
+
+    <!-- Score List -->
+    <h3>تاریخچه امتیازات</h3>
+    <div class="score-list" *ngIf="scores.length > 0; else noScores">
+      <div class="score-item" *ngFor="let score of scores; let i = index" @fadeIn>
+        <div class="score-details">
+          <p><strong>{{ score.title }}</strong></p>
+          <p>{{ score.points }} امتیاز</p>
+          <p>تاریخ: {{ formatJalaliDate(score.date) }}</p>
+          <p *ngIf="score.description && score.showDetails" class="description">{{ score.description }}</p>
+        </div>
+        <button class="btn btn-details" (click)="toggleDetails(i)" aria-label="نمایش جزئیات امتیاز">
+          <i class="fas" [ngClass]="score.showDetails ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </button>
+      </div>
+    </div>
+    <ng-template #noScores>
+      <div class="no-scores">
+        <i class="fas fa-star-half-alt"></i>
+        <p>هنوز امتیازی کسب نکرده‌اید! با سفارش غذا امتیاز جمع کنید.</p>
+      </div>
+    </ng-template>
+
+    <!-- Filter and Sort Controls -->
+    <div class="filter-sort" *ngIf="scores.length > 0">
+      <div class="input-label">
+        <label for="sort-option">مرتب‌سازی بر اساس</label>
+        <select id="sort-option" class="input-field" [(ngModel)]="sortOption" (ngModelChange)="sortScores()">
+          <option value="date-desc">جدیدترین</option>
+          <option value="date-asc">قدیمی‌ترین</option>
+          <option value="points-desc">بیشترین امتیاز</option>
+          <option value="points-asc">کمترین امتیاز</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

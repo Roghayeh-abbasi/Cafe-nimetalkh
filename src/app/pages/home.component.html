@@ -1,0 +1,192 @@
+<header [ngClass]="{'scrolled': isScrolled}" class="header-with-bg">
+  <div class="container">
+    <div class="header-content">
+      <nav class="navbar">
+        <a routerLink="/" class="logo"> </a>
+        <div class="search-bar">
+          <input type="text" [(ngModel)]="searchQuery" (input)="searchProducts()" placeholder="جستجوی محصولات...">
+        </div>
+        <ul class="nav-links">
+          <li><a (click)="scrollToSection('contact')">تماس با ما</a></li>
+        <li *ngIf="isLoggedIn" class="profile-link" [routerLink]="['/profile']">
+          <img *ngIf="profileImage" [src]="profileImage" alt="پروفایل" class="profile-icon">
+          <span>{{ 'پروفایل' }}</span>
+        </li>
+        <li *ngIf="!isLoggedIn" [routerLink]="['/auth/login']">ورود/ثبت‌نام</li>
+          <li>
+            <a (click)="showCartPage()" class="cart-icon ros-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count">{{ cartItemCount }}</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="sticky-menu" [ngClass]="{'scrolled': isScrolled}">
+    <ul class="menu-items">
+      <li *ngFor="let item of menuItems; let i = index"
+          [ngClass]="{'active': activeMenuItem === i}"
+          (click)="scrollToSection(item.sectionId); setActiveMenuItem(i)">
+        <img [src]="item.image" [alt]="item.name" class="menu-image">
+        <span>{{ item.name }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <section id="products" class="products-section">
+    <div id="cold-drinks" class="category-section">
+      <h3 class="category-title">نوشیدنی‌</h3>
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts | categoryFilter:'cold-drinks'" class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p class="price" *ngIf="product.discount && product.discount > 0">
+            <span class="original-price">{{ product.price }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+            <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+          </p>
+          <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+          <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="hot-drinks" class="category-section">
+      <h3 class="category-title">قهوه</h3>
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts | categoryFilter:'hot-drinks'" class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p class="price" *ngIf="product.discount && product.discount > 0">
+            <span class="original-price">{{ product.price }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+            <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+          </p>
+          <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+          <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pasta" class="category-section">
+      <h3 class="category-title">پاستا</h3>
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts | categoryFilter:'pasta'" class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p class="price" *ngIf="product.discount && product.discount > 0">
+            <span class="original-price">{{ product.price }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+            <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+          </p>
+          <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+          <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pizza" class="category-section">
+      <h3 class="category-title">پیتزا</h3>
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts | categoryFilter:'pizza'" class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p class="price" *ngIf="product.discount && product.discount > 0">
+            <span class="original-price">{{ product.price }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+            <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+          </p>
+          <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+          <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="cake" class="category-section">
+      <h3 class="category-title">کیک</h3>
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts | categoryFilter:'cake'" class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p class="price" *ngIf="product.discount && product.discount > 0">
+            <span class="original-price">{{ product.price }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+            <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+          </p>
+          <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+          <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="ice-cream" class="category-section">
+      <h3 class="category-title">بستنی</h3>
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts | categoryFilter:'ice-cream'" class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p class="price" *ngIf="product.discount && product.discount > 0">
+            <span class="original-price">{{ product.price }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+            <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+          </p>
+          <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+          <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="breakfast" class="category-section">
+      <h3 class="category-title">صبحانه</h3>
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts | categoryFilter:'breakfast'" class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p class="price" *ngIf="product.discount && product.discount > 0">
+            <span class="original-price">{{ product.price }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+            <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+          </p>
+          <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+          <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="salad" class="category-section">
+      <h3 class="category-title">سالاد</h3>
+      <div class="products-grid">
+        <div *ngFor="let product of filteredProducts | categoryFilter:'salad'" class="product-card">
+          <img [src]="product.image" [alt]="product.name" class="product-image">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p class="price" *ngIf="product.discount && product.discount > 0">
+            <span class="original-price">{{ product.price }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(product) }} تومان</span>
+            <span class="discount-badge">{{ product.discount }}% تخفیف</span>
+          </p>
+          <p class="price" *ngIf="!product.discount || product.discount === 0">{{ product.price }} تومان</p>
+          <button (click)="addToCart(product); $event.stopPropagation()" class="btn btn-add-to-cart">افزودن به سبد خرید</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <h2>تماس با ما</h2>
+    <p>برای سفارش یا اطلاعات بیشتر با ما تماس بگیر!</p>
+    <p>تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</p>
+    <p>ایمیل: infocafenemat.com</p>
+  </section>
+</div>

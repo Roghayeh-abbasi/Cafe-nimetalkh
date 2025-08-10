@@ -1,0 +1,301 @@
+
+@import '../../../assets/styles/profile-shared.css';
+
+.chart-container {
+  max-width: 300px;
+  margin: 1.5rem auto;
+}
+
+.order-section {
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  font-size: 1.2rem;
+  color: #4a2f1a;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  background-color: rgba(250, 204, 21, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.section-header:hover {
+  background-color: rgba(250, 204, 21, 0.3);
+}
+
+.toggle-icon {
+  display: inline-block;
+}
+
+.toggle-icon svg {
+  width: 1rem;
+  height: 1rem;
+  transition: stroke 0.3s ease;
+}
+
+.toggle-icon svg:hover {
+  stroke: #bda274; /* تغییر رنگ هنگام هاور */
+}
+
+.section-content {
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: 1000px;
+  opacity: 1;
+  overflow: hidden;
+}
+
+.section-content.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  background-color: rgba(245, 230, 204, 0.95);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #fef9c3;
+  text-align: right;
+  font-size: 0.95rem;
+  color: #2e1606;
+}
+
+th {
+  background-color: #bda274;
+  color: #2e1606;
+  font-weight: 600;
+}
+
+td {
+  background-color: rgba(245, 230, 204, 0.9);
+}
+
+.delivered {
+  color: #2f855a;
+  font-weight: 500;
+}
+
+.canceled {
+  color: #c53030;
+  font-weight: 500;
+}
+
+.pending {
+  color: #d97706;
+  font-weight: 500;
+}
+
+.details-row {
+  background-color: rgba(250, 204, 21, 0.1);
+}
+
+button {
+  padding: 8px 16px;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  border: none;
+  background-color: #bda274;
+  color: #2e1606;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #a58c61;
+  transform: translateY(-2px);
+}
+
+.order-details {
+  padding: 1.5rem;
+  background-color: rgba(245, 230, 204, 0.95);
+  border-radius: 8px;
+  margin: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.order-details h3 {
+  font-size: 1.2rem;
+  color: #4a2f1a;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.order-details p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #2e1606;
+}
+
+.order-details p strong {
+  font-weight: 600;
+  color: #4a2f1a;
+}
+
+.order-details ul {
+  margin: 1rem 0;
+  padding-right: 1.5rem;
+  list-style-type: disc;
+}
+
+.order-details ul li {
+  font-size: 0.9rem;
+  color: #2e1606;
+  margin-bottom: 0.5rem;
+}
+
+.order-details ul li span {
+  color: #6b4e31;
+  font-style: italic;
+}
+
+button[onClick="goBack()"] {
+  width: 100%;
+  max-width: 200px;
+  margin-top: 1.5rem;
+  background-color: #6b4e31;
+}
+
+button[onClick="goBack()"]:hover {
+  background-color: #4a2f1a;
+}
+
+/* پاسخ‌گویی برای موبایل */
+@media (max-width: 768px) {
+ .chart-container {
+    max-width: 100%;
+    width: 90vw;
+    margin: 1rem auto;
+  }
+
+  .section-header {
+    font-size: 1rem;
+    padding: 8px;
+  }
+
+  .toggle-icon svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 0.5rem;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody, tr {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(245, 230, 204, 0.95);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: none;
+    font-size: 0.9rem;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #4a2f1a;
+    width: 40%;
+  }
+
+  .details-row {
+    padding: 10px;
+  }
+
+  button {
+    width: 100%;
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .order-details {
+    padding: 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .order-details h3 {
+    font-size: 1rem;
+  }
+
+  .order-details p,
+  .order-details ul li {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  button[onClick="goBack()"] {
+    max-width: 150px;
+    margin: 1rem auto;
+    display: block;
+  }
+}
+
+
+/* دسکتاپ */
+@media (min-width: 769px) {
+  .chart-container {
+    max-width: 350px;
+  }
+
+  .section-header {
+    font-size: 1.3rem;
+    padding: 12px;
+  }
+
+  .toggle-icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  table {
+    margin-top: 1rem;
+  }
+
+  th, td {
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .order-details {
+    padding: 2rem;
+  }
+
+  .order-details h3 {
+    font-size: 1.3rem;
+  }
+}

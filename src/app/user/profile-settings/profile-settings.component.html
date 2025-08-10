@@ -1,0 +1,169 @@
+<div class="profile-box ">
+  <div class="settings-box" role="region" aria-labelledby="settings-title">
+    <h1 id="settings-title" class="settings-title">تنظیمات حساب کاربری</h1>
+    
+    <!-- Tab Navigation -->
+    <div class="tab-bar" role="tablist">
+      <button role="tab" class="tab" [ngClass]="{'active': activeTab === 'password'}" 
+              (click)="setActiveTab('password')" [attr.aria-selected]="activeTab === 'password' ? 'true' : 'false'"
+              tabindex="0">
+        تغییر رمز
+      </button>
+      <button role="tab" class="tab" [ngClass]="{'active': activeTab === 'notifications'}" 
+              (click)="setActiveTab('notifications')" [attr.aria-selected]="activeTab === 'notifications' ? 'true' : 'false'"
+              tabindex="0">
+        اعلان‌ها
+      </button>
+      <button role="tab" class="tab" [ngClass]="{'active': activeTab === 'preferences'}" 
+              (click)="setActiveTab('preferences')" [attr.aria-selected]="activeTab === 'preferences' ? 'true' : 'false'"
+              tabindex="0">
+        اولویت‌های غذایی
+      </button>
+      <button role="tab" class="tab" [ngClass]="{'active': activeTab === 'display'}" 
+              (click)="setActiveTab('display')" [attr.aria-selected]="activeTab === 'display' ? 'true' : 'false'"
+              tabindex="0">
+        نمایش
+      </button>
+    </div>
+
+    <!-- Password Change Tab -->
+    <div *ngIf="activeTab === 'password'" class="tab-content" role="tabpanel" id="password-panel">
+      <h2 class="tab-title">تغییر رمز عبور</h2>
+      <div class="form-group">
+        <div class="input-label">
+          <label for="current-password">رمز فعلی</label>
+          <div class="password-input-wrapper">
+            <input id="current-password" class="input-field" [type]="showCurrentPassword ? 'text' : 'password'" 
+                   [(ngModel)]="password.current" 
+                   [attr.aria-invalid]="errors.current ? 'true' : 'false'" 
+                   aria-describedby="current-password-error"
+                   placeholder="رمز فعلی خود را وارد کنید">
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('current')" 
+                    aria-label="نمایش/مخفی کردن رمز فعلی">
+              <i [ngClass]="showCurrentPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+          <span *ngIf="errors.current" id="current-password-error" class="error-message">{{ errors.current }}</span>
+        </div>
+        <div class="input-label">
+          <label for="new-password">رمز جدید</label>
+          <div class="password-input-wrapper">
+            <input id="new-password" class="input-field" [type]="showNewPassword ? 'text' : 'password'" 
+                   [(ngModel)]="password.new" 
+                   [attr.aria-invalid]="errors.new ? 'true' : 'false'" 
+                   aria-describedby="new-password-error"
+                   placeholder="حداقل 8 کاراکتر، شامل حرف بزرگ، عدد و کاراکتر خاص"
+                   (input)="checkPasswordStrength()">
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('new')" 
+                    aria-label="نمایش/مخفی کردن رمز جدید">
+              <i [ngClass]="showNewPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+          <span *ngIf="errors.new" id="new-password-error" class="error-message">{{ errors.new }}</span>
+          <div class="password-strength" *ngIf="password.new">
+            <span>قدرت رمز:</span>
+            <div class="strength-bar" [ngClass]="passwordStrength"></div>
+            <span class="strength-text">{{ passwordStrengthText }}</span>
+          </div>
+        </div>
+        <div class="input-label">
+          <label for="confirm-password">تأیید رمز جدید</label>
+          <div class="password-input-wrapper">
+            <input id="confirm-password" class="input-field" [type]="showConfirmPassword ? 'text' : 'password'" 
+                   [(ngModel)]="password.confirm" 
+                   [attr.aria-invalid]="errors.confirm ? 'true' : 'false'" 
+                   aria-describedby="confirm-password-error"
+                   placeholder="رمز جدید را دوباره وارد کنید">
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('confirm')" 
+                    aria-label="نمایش/مخفی کردن تأیید رمز">
+              <i [ngClass]="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+          <span *ngIf="errors.confirm" id="confirm-password-error" class="error-message">{{ errors.confirm }}</span>
+        </div>
+        <div class="button-group">
+          <button class="btn btn-update" (click)="changePassword()" [disabled]="isSubmitting">
+            <span *ngIf="isSubmitting" class="spinner"></span>
+            {{ isSubmitting ? 'در حال پردازش...' : 'تغییر رمز' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Tab -->
+    <div *ngIf="activeTab === 'notifications'" class="tab-content" role="tabpanel" id="notifications-panel">
+      <h2 class="tab-title">تنظیمات اعلان‌ها</h2>
+      <div class="form-group">
+        <div class="input-label">
+          <label for="email-notifications">
+            <input id="email-notifications" type="checkbox" [(ngModel)]="notifications.email">
+            دریافت اعلان‌های ایمیلی (وضعیت سفارش، پیشنهادات ویژه)
+          </label>
+        </div>
+        <div class="input-label">
+          <label for="sms-notifications">
+            <input id="sms-notifications" type="checkbox" [(ngModel)]="notifications.sms">
+            دریافت اعلان‌های پیامکی (تأیید سفارش، زمان تحویل)
+          </label>
+        </div>
+        <div class="input-label">
+          <label for="push-notifications">
+            <input id="push-notifications" type="checkbox" [(ngModel)]="notifications.push">
+            دریافت اعلان‌های پوش (اعلان‌های اپلیکیشن)
+          </label>
+        </div>
+        <div class="button-group">
+          <button class="btn btn-update" (click)="saveNotifications()" [disabled]="isSubmitting">
+            ذخیره تنظیمات
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Food Preferences Tab -->
+    <div *ngIf="activeTab === 'preferences'" class="tab-content" role="tabpanel" id="preferences-panel">
+      <h2 class="tab-title">اولویت‌های غذایی</h2>
+      <div class="form-group">
+        <div class="input-label">
+          <label for="dietary-preference">رژیم غذایی</label>
+          <select id="dietary-preference" class="input-field" [(ngModel)]="preferences.dietary">
+            <option value="">هیچ‌کدام</option>
+            <option value="vegetarian">گیاه‌خواری</option>
+            <option value="vegan">وگان</option>
+            <option value="gluten-free">بدون گلوتن</option>
+            <option value="halal">حلال</option>
+          </select>
+        </div>
+        <div class="input-label">
+          <label for="allergens">آلرژی‌ها</label>
+          <input id="allergens" class="input-field" type="text" [(ngModel)]="preferences.allergens"
+                 placeholder="مثال: بادام‌زمینی، لبنیات">
+        </div>
+        <div class="button-group">
+          <button class="btn btn-update" (click)="savePreferences()" [disabled]="isSubmitting">
+            ذخیره تنظیمات
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Display Settings Tab -->
+    <div *ngIf="activeTab === 'display'" class="tab-content" role="tabpanel" id="display-panel">
+      <h2 class="tab-title">تنظیمات نمایش</h2>
+      <div class="form-group">
+        <div class="input-label">
+          <label for="theme">تم رنگی</label>
+          <select id="theme" class="input-field" [(ngModel)]="display.theme" (change)="applyTheme()">
+            <option value="light">روشن</option>
+            <option value="dark">تیره</option>
+          </select>
+        </div>
+        <div class="button-group">
+          <button class="btn btn-update" (click)="saveDisplaySettings()" [disabled]="isSubmitting">
+            ذخیره تنظیمات
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+
+<div class="profile-container">
+  <button class="toggle-sidebar-btn" (click)="toggleSidebar()" [ngClass]="{'open': isSidebarOpen}">
+    <div class="hamburger-icon"></div>
+  </button>
+  <div class="profile-sidebar" [ngClass]="{'open': isSidebarOpen}">
+    <h2>پروفایل</h2>
+    <ul class="profile-tabs">
+      <li [ngClass]="{'active': router.isActive('/profile/info', true)}">
+        <a [routerLink]="['/profile/info']" (click)="closeSidebar()">اطلاعات شخصی</a>
+      </li>
+      <li [ngClass]="{'active': router.isActive('/profile/settings', true)}">
+        <a [routerLink]="['/profile/settings']" (click)="closeSidebar()">تنظیمات</a>
+      </li>
+      <li [ngClass]="{'active': router.isActive('/profile/orders', true)}">
+        <a [routerLink]="['/profile/orders']" (click)="closeSidebar()">سفارش‌ها</a>
+      </li>
+      <li [ngClass]="{'active': router.isActive('/profile/points', true)}">
+        <a [routerLink]="['/profile/points']" (click)="closeSidebar()">امتیازات</a>
+      </li>
+      <li [ngClass]="{'active': router.isActive('/profile/discounts', true)}">
+        <a [routerLink]="['/profile/discounts']" (click)="closeSidebar()">تخفیف‌ها</a>
+      </li>
+      <li [ngClass]="{'active': router.isActive('/profile/payments', true)}">
+        <a [routerLink]="['/profile/payments']" (click)="closeSidebar()">پرداخت ها</a>
+      </li>
+       <li [ngClass]="{'active': router.isActive('/profile/addresses', true)}">
+        <a [routerLink]="['/profile/addresses'] "(click)="closeSidebar()">آدرس ها</a>
+      </li>
+      <li>
+        <a (click)="goBack()">بازگشت به خانه</a>
+      </li>
+      <li>
+        <a (click)="logout()">خروج از حساب کاربری</a>
+      </li>
+   
+    </ul>
+  </div>
+  <div class="profile-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

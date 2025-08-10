@@ -1,0 +1,27 @@
+@import '../../../assets/styles/profile-shared.css';
+.address-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.address-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+textarea.input-field {
+  resize: vertical;
+  min-height: 80px;
+}
+
+#map {
+  height: 300px;
+  width: 100%;
+  border-radius: 8px;
+}

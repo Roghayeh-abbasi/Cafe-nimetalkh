@@ -1,0 +1,192 @@
+@import '../../../assets/styles/profile-shared.css';
+
+.profile-subtitle {
+  font-size: 20px;
+  color: #2e1606;
+  margin-bottom: 20px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.profile-image-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fef9c3;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+}
+
+.profile-image-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border: 3px solid #fef9c3;
+}
+
+.profile-image-placeholder .material-icons {
+  font-size: 60px;
+  color: #fef9c3;
+}
+
+.user-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2e1606;
+  margin: 12px 0;
+}
+
+.info-card {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  text-align: right;
+  transition: background-color 0.3s ease;
+}
+
+.info-card:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.info-card h4 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2e1606;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-card p {
+  font-size: 16px;
+  color: #2e1606;
+}
+
+.loyalty-section .material-icons {
+  color: #bda274;
+}
+
+.discount-info {
+  color: #a58c61;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.reservation-section .material-icons {
+  color: #bda274;
+}
+
+.edit-form .input-label .material-icons {
+  color: #fef9c3;
+  margin-left: 8px;
+}
+
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.profile-image-preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 10px;
+  border: 2px solid #fef9c3;
+}
+
+@media (max-width: 768px){
+  .profile-subtitle {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .profile-image, .profile-image-placeholder {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-image-placeholder .material-icons {
+    font-size: 40px;
+  }
+
+  .user-name {
+    font-size: 18px;
+    margin: 8px 0;
+  }
+
+  .info-card {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .info-card h4 {
+    font-size: 14px;
+    gap: 5px;
+  }
+
+  .info-card p {
+    font-size: 13px;
+  }
+  .profile-image-preview {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (min-width: 769px) {
+  .profile-subtitle {
+    font-size: 22px;
+  }
+
+  .profile-image, .profile-image-placeholder {
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-image-placeholder .material-icons {
+    font-size: 70px;
+  }
+
+  .user-name {
+    font-size: 26px;
+  }
+
+  .info-card {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .info-card h4 {
+    font-size: 18px;
+  }
+
+  .info-card p {
+    font-size: 16px;
+  }
+
+  .profile-image-preview {
+    width: 100px;
+    height: 100px;
+  }
+}

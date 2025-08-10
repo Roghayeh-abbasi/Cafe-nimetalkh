@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="profile-box" role="region" aria-labelledby="discounts-title">
+    <h2 id="discounts-title" class="profile-title">کدهای تخفیف شما</h2>
+
+    <!-- Discount Form -->
+    <div class="form-group">
+      <div class="input-label">
+        <label for="discount-code">کد تخفیف</label>
+        <input
+          id="discount-code"
+          class="input-field"
+          type="text"
+          placeholder="مثال: ONLINE10"
+          [(ngModel)]="newDiscountCode"
+          [ngClass]="{'invalid': codeError}"
+          (input)="validateCode()"
+        >
+        <p class="error-message" *ngIf="codeError">{{ codeErrorMessage }}</p>
+      </div>
+      <button
+        class="btn btn-update"
+        [disabled]="codeError || !newDiscountCode"
+        (click)="applyDiscount()"
+      >
+        اعمال کد تخفیف
+      </button>
+    </div>
+
+    <!-- Filter Controls -->
+    <div class="filter-sort" *ngIf="userDiscounts.length > 0">
+      <div class="input-label">
+        <label for="filter-option">نمایش</label>
+        <select id="filter-option" class="input-field" [(ngModel)]="filterOption" (ngModelChange)="filterDiscounts()">
+          <option value="all">همه تخفیف‌ها</option>
+          <option value="active">تخفیف‌های فعال</option>
+          <option value="expired">تخفیف‌های منقضی‌شده</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Discount List -->
+    <h3>تخفیف‌های ثبت‌شده</h3>
+    <div class="discount-list" *ngIf="filteredDiscounts.length > 0; else noDiscounts">
+      <div class="discount-item" *ngFor="let discount of filteredDiscounts; let i = index" @fadeIn>
+        <div class="discount-details">
+          <p class="discount-title">
+            <svg class="discount-icon" [ngClass]="discount.type" viewBox="0 0 24 24" width="20" height="20">
+              <path [attr.d]="getDiscountIcon(discount.type)" fill="#bda274"/>
+            </svg>
+            <strong>{{ discount.code }}</strong>: {{ discount.percentage }}%
+          </p>
+          <p class="discount-description">{{ discount.description }}</p>
+          <p>انقضا: {{ formatJalaliDate(discount.expiry) }}</p>
+          <p class="status" [ngClass]="{'expired': isExpired(discount.expiry)}">
+            وضعیت: {{ isExpired(discount.expiry) ? 'منقضی‌شده' : 'فعال' }}
+          </p>
+          <div class="progress-bar">
+            <div class="progress" [style.width]="getProgressWidth(discount.expiry)"></div>
+          </div>
+        </div>
+        <div class="button-group">
+          <button class="btn btn-copy" (click)="copyCode(discount.code)" title="کپی کد">
+            <svg viewBox="0 0 24 24" width="16" height="16">
+              <path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z" fill="#fff"/>
+            </svg>
+          </button>
+          <button class="btn btn-delete" (click)="removeDiscount(i)">حذف</button>
+        </div>
+      </div>
+    </div>
+    <ng-template #noDiscounts>
+      <div class="no-discounts">
+        <svg viewBox="0 0 24 24" width="40" height="40">
+          <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-2 6h-4v2h4v2h-4v2h4v2H7v-2h4v-2H7v-2h4V9H7V7h10v2z" fill="#bda274"/>
+        </svg>
+        <p>هیچ کد تخفیفی ثبت نشده است. کد تخفیف خود را وارد کنید!</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

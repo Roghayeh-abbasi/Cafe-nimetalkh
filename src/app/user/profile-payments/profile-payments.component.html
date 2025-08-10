@@ -1,0 +1,29 @@
+<div class="profile-box">
+  <h2>مدیریت پرداخت‌ها</h2>
+  <div class="form-group">
+    <div class="input-label">
+      <label for="payment-amount">مبلغ پرداخت</label>
+      <input id="payment-amount" class="input-field" type="number" placeholder="مثال: 50000" [(ngModel)]="newPayment.amount">
+    </div>
+    <div class="input-label">
+      <label for="payment-date">تاریخ پرداخت</label>
+      <input id="payment-date" class="input-field" type="date" [(ngModel)]="newPayment.date">
+    </div>
+    <div class="input-label">
+      <label for="payment-method">روش پرداخت</label>
+      <input id="payment-method" class="input-field" type="text" placeholder="مثال: کارت بانکی" [(ngModel)]="newPayment.method">
+    </div>
+    <button class="btn btn-update" (click)="addPayment()">افزودن پرداخت</button>
+  </div>
+
+  <h3>پرداخت‌های ذخیره‌شده</h3>
+  <div class="payment-list" *ngIf="payments.length > 0; else noPayments">
+    <div class="payment-item" *ngFor="let payment of payments; let i = index">
+      <p><strong>{{ payment.amount }}</strong> تومان (تاریخ: {{ payment.date }}, روش: {{ payment.method }})</p>
+      <button class="btn" style="background-color: #ef4444; color: white;" (click)="removePayment(i)">حذف</button>
+    </div>
+  </div>
+  <ng-template #noPayments>
+    <p>هیچ پرداختی ثبت نشده است.</p>
+  </ng-template>
+</div>

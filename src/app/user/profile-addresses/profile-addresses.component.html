@@ -1,0 +1,34 @@
+<div class="profile-box">
+  <h2>مدیریت آدرس‌ها</h2>
+  <div class="form-group">
+    <div class="input-label">
+      <label for="address-name">نام آدرس (مثل خانه، محل کار)</label>
+      <input id="address-name" class="input-field" type="text" placeholder="مثال: خانه" [(ngModel)]="newAddress.name">
+    </div>
+    <div class="input-label">
+      <label for="address-details">جزئیات آدرس</label>
+      <textarea id="address-details" class="input-field" placeholder="مثال: تهران، خیابان آزادی، پلاک ۱۲۳" [(ngModel)]="newAddress.details"></textarea>
+    </div>
+    <div class="input-label">
+      <label for="postal-code">کد پستی</label>
+      <input id="postal-code" class="input-field" type="text" placeholder="مثال: ۱۲۳۴۵۶۷۸۹۰" [(ngModel)]="newAddress.postalCode">
+    </div>
+    <div class="input-label">
+      <label>موقعیت روی نقشه</label>
+      <div id="map" style="height: 300px; border-radius: 8px;"></div>
+    </div>
+    <button class="btn btn-update" (click)="addAddress()">افزودن آدرس</button>
+  </div>
+
+  <h3>آدرس‌های ذخیره‌شده</h3>
+  <div class="address-list" *ngIf="addresses.length > 0; else noAddresses">
+    <div class="address-item" *ngFor="let address of addresses; let i = index">
+      <p><strong>{{ address.name }}</strong>: {{ address.details }} (کد پستی: {{ address.postalCode }})</p>
+      <p>موقعیت: [{{ address.lat }}, {{ address.lng }}]</p>
+      <button class="btn" style="background-color: #ef4444; color: white;" (click)="removeAddress(i)">حذف</button>
+    </div>
+  </div>
+  <ng-template #noAddresses>
+    <p>هیچ آدرسی ثبت نشده است.</p>
+  </ng-template>
+</div>

@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="login-box">
+    <h1 class="login-title">ورود</h1>
+    
+    <form (ngSubmit)="login()" class="form-group">
+      <label class="input-label">
+        شماره موبایل:
+        <input [(ngModel)]="username" name="username" type="text" class="input-field" placeholder="شماره موبایل" required>
+      </label>
+      
+      <label class="input-label">
+        رمز عبور:
+        <input [(ngModel)]="password" name="password" type="password" class="input-field" placeholder="رمز عبور" required>
+      </label>
+
+      <button type="submit" class="btn btn-login">ورود</button>
+
+      <p *ngIf="error" class="error-message">{{ error }}</p>
+    </form>
+
+    <p class="register-link">
+      حساب ندارید؟ <a routerLink="/auth/signup" class="link">ثبت‌نام</a>
+    </p>
+  </div>
+</div>
+
+

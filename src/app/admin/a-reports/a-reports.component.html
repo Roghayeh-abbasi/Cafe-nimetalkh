@@ -1,0 +1,72 @@
+<div class="reports-container" dir="rtl">
+  <h3>گزارشات</h3>
+
+  <div class="add-report-form">
+    <input
+      type="text"
+      [(ngModel)]="newReport.title"
+      placeholder="عنوان گزارش"
+      class="form-input"
+    />
+    <input
+      type="text"
+      [(ngModel)]="newReport.date"
+      placeholder="تاریخ (مثال: 1404/04/01)"
+      class="form-input"
+    />
+    <input
+      type="number"
+      [(ngModel)]="newReport.revenue"
+      placeholder="درآمد (تومان)"
+      class="form-input"
+      min="0"
+    />
+    <button (click)="addReport()" class="add-btn">افزودن گزارش</button>
+  </div>
+
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="filterReports()"
+    placeholder="جستجوی عنوان یا تاریخ"
+    class="form-input search-input"
+  />
+
+  <table class="reports-table">
+    <thead>
+      <tr>
+        <th>عنوان گزارش</th>
+        <th>تاریخ</th>
+        <th>درآمد (تومان)</th>
+        <th>عملیات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let report of filterReports(); let i = index">
+        <td *ngIf="editingIndex !== i">{{ report.title }}</td>
+        <td *ngIf="editingIndex === i">
+          <input type="text" [(ngModel)]="editedReport.title" class="edit-input" />
+        </td>
+        <td *ngIf="editingIndex !== i">{{ report.date }}</td>
+        <td *ngIf="editingIndex === i">
+          <input type="text" [(ngModel)]="editedReport.date" class="edit-input" />
+        </td>
+        <td *ngIf="editingIndex !== i">{{ report.revenue }}</td>
+        <td *ngIf="editingIndex === i">
+          <input type="number" [(ngModel)]="editedReport.revenue" class="edit-input" min="0" />
+        </td>
+        <td>
+          <button *ngIf="editingIndex !== i" (click)="editReport(i)" class="edit-btn">ویرایش</button>
+          <div *ngIf="editingIndex === i" class="edit-controls">
+            <button (click)="saveEdit()" class="save-btn">ذخیره</button>
+            <button (click)="cancelEdit()" class="cancel-btn">لغو</button>
+          </div>
+          <button *ngIf="editingIndex !== i" (click)="deleteReport(i)" class="delete-btn">حذف</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="showSuccess" class="success-message">عملیات با موفقیت انجام شد!</div>
+  <div *ngIf="reports.length === 0 && !searchTerm" class="no-reports">هیچ گزارشی وجود ندارد.</div>
+</div>

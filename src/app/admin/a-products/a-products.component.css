@@ -1,0 +1,270 @@
+.products-container {
+  direction: rtl;
+  padding: 20px;
+  background-color: #FDF0E0; /* کرم عسلی */
+  min-height: 100vh;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+h3 {
+  color: #261C15; /* قهوه‌ای برشته */
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+.add-product-form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #FFFFFF;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.form-input {
+  padding: 12px;
+  border: 2px solid #3B6B5A; /* سبز نعنایی */
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  color: #261C15;
+  background-color: #FDF0E0;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #F28A6E; /* مرجانی گرم */
+  outline: none;
+}
+
+.search-input {
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border: 2px solid #3B6B5A;
+  border-radius: 8px;
+  padding: 12px;
+  background-color: #FDF0E0;
+  color: #261C15;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #F28A6E;
+  outline: none;
+}
+
+.add-btn {
+  padding: 12px;
+  background-color: #F28A6E; /* مرجانی گرم */
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-btn:hover {
+  background-color: #E06B53; /* تیره‌تر برای هورر */
+  transform: scale(1.05);
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #261C15;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.products-table th,
+.products-table td {
+  border: 2px solid #3B6B5A;
+  padding: 12px;
+  text-align: center;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+.products-table th {
+  background-color: #261C15; /* قهوه‌ای برشته */
+  color: #E4E2E0; /* خاکستری مایل به بژ */
+}
+
+.products-table tr:hover td {
+  background-color: rgba(242, 138, 110, 0.1); /* مرجانی شفاف */
+}
+
+.edit-input {
+  padding: 8px;
+  border: 2px solid #3B6B5A;
+  border-radius: 8px;
+  width: 100px;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+  background-color: #FDF0E0;
+  color: #261C15;
+  transition: border-color 0.3s ease;
+}
+
+.edit-input:focus {
+  border-color: #F28A6E;
+  outline: none;
+}
+
+.edit-btn {
+  padding: 8px 12px;
+  background-color: #3B6B5A; /* سبز نعنایی */
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #2F5749;
+  transform: scale(1.05);
+}
+
+.save-btn {
+  padding: 8px 12px;
+  background-color: #F28A6E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.save-btn:hover {
+  background-color: #E06B53;
+  transform: scale(1.05);
+}
+
+.cancel-btn {
+  padding: 8px 12px;
+  background-color: #261C15;
+  color: #E4E2E0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #1A120F;
+  transform: scale(1.05);
+}
+
+.delete-btn {
+  padding: 8px 12px;
+  background-color: #261C15;
+  color: #E4E2E0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #1A120F;
+  transform: scale(1.05);
+}
+
+.no-products {
+  color: #261C15;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1rem;
+}
+
+.success-message {
+  background-color: #3B6B5A;
+  color: #FFFFFF;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .products-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .products-table th,
+  .products-table td {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .edit-input {
+    width: 80px;
+    font-size: 0.8rem;
+  }
+
+  .edit-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .add-product-form {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-input,
+  .add-btn {
+    font-size: 0.9rem;
+  }
+
+  .products-table th,
+  .products-table td {
+    font-size: 0.8rem;
+  }
+}
