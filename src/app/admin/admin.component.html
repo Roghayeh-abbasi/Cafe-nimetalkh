@@ -1,14 +1,50 @@
 <div class="admin-panel">
-  <aside class="sidebar">
-    <h2>پنل ادمین</h2>
-    <ul>
-      <li><a routerLink="/admin/products">محصولات</a></li>
-      <li><a routerLink="/admin/orders">سفارشات</a></li>
-      <li><a routerLink="/admin/users">کاربران</a></li>
-      <li><a routerLink="/admin/reports">گزارشات</a></li>
-    </ul>
-  </aside>
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
+  <!-- Header -->
+  <header class="header">
+    <div class="panel-title">پنل مدیریت</div>
+    <div class="header-controls">
+      <div class="search-bar">
+        <input type="text" placeholder="جستجو..." class="search-input" aria-label="جستجو در پنل">
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="notifications">
+        <i class="fas fa-bell"></i>
+        <span class="notification-count">3</span>
+      </div>
+      <div class="profile-menu">
+        <i class="fas fa-user-circle"></i>
+        <span>{{ adminName }}</span>
+        <div class="dropdown">
+          <button (click)="viewProfile()" class="dropdown-item">پروفایل</button>
+          <button (click)="logout()" class="dropdown-item">خروج</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" [ngClass]="{'collapsed': isSidebarCollapsed}">
+      <button 
+        class="toggle-btn" 
+        (click)="toggleSidebar()" 
+        [attr.aria-label]="isSidebarCollapsed ? 'باز کردن منوی کناری' : 'بستن منوی کناری'">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h2 *ngIf="!isSidebarCollapsed">پنل ادمین</h2>
+      <ul>
+        <li><a routerLink="./dashboard" routerLinkActive="active"><i class="fas fa-tachometer-alt"></i><span *ngIf="!isSidebarCollapsed">داشبورد</span></a></li>
+        <li><a routerLink="./users" routerLinkActive="active"><i class="fas fa-users"></i><span *ngIf="!isSidebarCollapsed">کاربران</span></a></li>
+        <li><a routerLink="./orders" routerLinkActive="active"><i class="fas fa-shopping-cart"></i><span *ngIf="!isSidebarCollapsed">سفارشات</span></a></li>
+        <li><a routerLink="./products" routerLinkActive="active"><i class="fas fa-box"></i><span *ngIf="!isSidebarCollapsed">محصولات</span></a></li>
+        <li><a routerLink="./reports" routerLinkActive="active"><i class="fas fa-chart-bar"></i><span *ngIf="!isSidebarCollapsed">گزارشات</span></a></li>
+        <li><a routerLink="./settings" routerLinkActive="active"><i class="fas fa-cog"></i><span *ngIf="!isSidebarCollapsed">تنظیمات</span></a></li>
+      </ul>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>

@@ -33,7 +33,7 @@
     <p class="orders-count" *ngIf="filteredOrders.length > 0">
       تعداد سفارشات: {{ filteredOrders.length }}
     </p>
-    <table class="orders-table" *ngIf="filteredOrders.length > 0; else noOrders">
+    <table class="orders-table table-shared" *ngIf="filteredOrders.length > 0; else noOrders">
       <thead>
         <tr>
           <th (click)="sortOrders('orderId')" class="sortable" role="button" aria-label="مرتب‌سازی بر اساس شناسه سفارش">

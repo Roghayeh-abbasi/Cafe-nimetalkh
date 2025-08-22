@@ -34,6 +34,7 @@
             ],
            "styles": [
               "src/styles.css",
+              "src/shared.css",
               "node_modules/leaflet/dist/leaflet.css"
            ],
             "scripts": []

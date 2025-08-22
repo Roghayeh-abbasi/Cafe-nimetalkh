@@ -1,0 +1,58 @@
+<div class="dashboard">
+  <h1>خوش آمدید به داشبورد ادمین</h1>
+  <!-- Widgets -->
+  <div class="widgets">
+    <div class="widget">
+      <h3><i class="fas fa-users"></i> تعداد کاربران</h3>
+      <p>{{ usersCount }}</p>
+    </div>
+    <div class="widget">
+      <h3><i class="fas fa-shopping-cart"></i> سفارشات امروز</h3>
+      <p>{{ ordersToday }}</p>
+    </div>
+    <div class="widget">
+      <h3><i class="fas fa-wallet"></i> درآمد امروز</h3>
+      <p>{{ revenueToday | number:'1.0-0' }} تومان</p>
+    </div>
+    <div class="widget">
+      <h3><i class="fas fa-envelope"></i> پیام‌های جدید</h3>
+      <p>{{ newMessages }}</p>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts">
+    <div class="chart-container">
+      <h3><i class="fas fa-chart-line"></i> روند فروش</h3>
+      <canvas id="salesChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3><i class="fas fa-chart-bar"></i> بازدیدها</h3>
+      <canvas id="visitsChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3><i class="fas fa-user-plus"></i> ثبت‌نام‌ها</h3>
+      <canvas id="signupsChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Recent Activities -->
+  <div class="recent-activities">
+    <h3><i class="fas fa-history"></i> فعالیت‌های اخیر</h3>
+    <ul>
+      <li *ngFor="let activity of recentActivities">
+        <span>{{ activity.user }}</span> {{ activity.action }} در {{ activity.time | date:'short' }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h3><i class="fas fa-bolt"></i> اقدامات سریع</h3>
+    <div class="action-buttons">
+      <button (click)="addProduct()" class="action-btn">افزودن محصول</button>
+      <button (click)="createReport()" class="action-btn">ساخت گزارش</button>
+      <button (click)="sendMessage()" class="action-btn">ارسال پیام</button>
+    </div>
+  </div>
+</div>

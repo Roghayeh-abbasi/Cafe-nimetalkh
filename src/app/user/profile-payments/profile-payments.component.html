@@ -1,29 +1,131 @@
-<div class="profile-box">
-  <h2>مدیریت پرداخت‌ها</h2>
-  <div class="form-group">
-    <div class="input-label">
-      <label for="payment-amount">مبلغ پرداخت</label>
-      <input id="payment-amount" class="input-field" type="number" placeholder="مثال: 50000" [(ngModel)]="newPayment.amount">
-    </div>
-    <div class="input-label">
-      <label for="payment-date">تاریخ پرداخت</label>
-      <input id="payment-date" class="input-field" type="date" [(ngModel)]="newPayment.date">
-    </div>
-    <div class="input-label">
-      <label for="payment-method">روش پرداخت</label>
-      <input id="payment-method" class="input-field" type="text" placeholder="مثال: کارت بانکی" [(ngModel)]="newPayment.method">
-    </div>
-    <button class="btn btn-update" (click)="addPayment()">افزودن پرداخت</button>
-  </div>
+<div class="container">
+  <div class="profile-box" dir="rtl" role="region" aria-labelledby="payments-title">
+    <h2 id="payments-title" class="profile-title">مدیریت پرداخت‌ها</h2>
 
-  <h3>پرداخت‌های ذخیره‌شده</h3>
-  <div class="payment-list" *ngIf="payments.length > 0; else noPayments">
-    <div class="payment-item" *ngFor="let payment of payments; let i = index">
-      <p><strong>{{ payment.amount }}</strong> تومان (تاریخ: {{ payment.date }}, روش: {{ payment.method }})</p>
-      <button class="btn" style="background-color: #ef4444; color: white;" (click)="removePayment(i)">حذف</button>
+    <!-- Payment Statistics -->
+    <div class="score-stats" *ngIf="filteredPayments.length > 0">
+      <div class="stats-card">
+        <i class="fas fa-wallet"></i>
+        <p>مجموع پرداخت‌ها: <strong>{{ totalAmount | number:'1.0-0' }} تومان</strong></p>
+      </div>
+      <div class="stats-card">
+        <i class="fas fa-credit-card"></i>
+        <p>تعداد پرداخت‌ها: <strong>{{ filteredPayments.length }}</strong></p>
+      </div>
+      <div class="stats-card">
+        <i class="fas fa-check-circle"></i>
+        <p>وضعیت: <strong>{{ paymentStatus }}</strong></p>
+      </div>
+    </div>
+
+    <!-- Payment List -->
+    <h3>تاریخچه پرداخت‌ها</h3>
+    <div class="score-list" *ngIf="filteredPayments.length > 0; else noPayments">
+      <div class="score-item" *ngFor="let payment of filteredPayments; let i = index" @fadeIn>
+        <div class="score-details">
+          <p><strong>شناسه: {{ payment.paymentId }}</strong></p>
+          <p>مبلغ: {{ payment.amount | number:'1.0-0' }} تومان</p>
+          <p>تاریخ: {{ formatJalaliDate(payment.date) }}</p>
+          <p>روش: {{ payment.method }}</p>
+          <p>وضعیت: {{ payment.status }}</p>
+          <p *ngIf="payment.description && payment.showDetails" class="description">{{ payment.description }}</p>
+        </div>
+        <button class="btn btn-details" (click)="toggleDetails(i)" aria-label="نمایش جزئیات پرداخت">
+          <i class="fas" [ngClass]="payment.showDetails ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </button>
+      </div>
+    </div>
+    <ng-template #noPayments>
+      <div class="no-scores">
+        <i class="fas fa-wallet"></i>
+        <p *ngIf="statusFilter === 'ناموفق'">هیچ پرداخت ناموفقی ثبت نشده است.</p>
+        <p *ngIf="statusFilter !== 'ناموفق' || !statusFilter">هنوز پرداختی ثبت نشده است! با انجام سفارش پرداخت ثبت کنید.</p>
+        <button class="btn btn-reset" (click)="resetFilters()" *ngIf="statusFilter || searchTerm" aria-label="بازگشت">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#2e1606"/>
+          </svg>
+               بازگشت
+        </button>
+      </div>
+    </ng-template>
+
+    <!-- Filter and Sort Controls -->
+    <div class="filter-sort" *ngIf="filteredPayments.length > 0">
+      <div class="input-label">
+        <label for="search-term">جستجوی پرداخت</label>
+        <input
+          id="search-term"
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="filterPayments()"
+          placeholder="جستجوی شناسه، مبلغ، یا روش پرداخت"
+          class="input-field search-input"
+          aria-label="جستجوی پرداخت‌ها"
+        />
+      </div>
+      <div class="input-label">
+        <label for="sort-option">مرتب‌سازی بر اساس</label>
+        <select
+          id="sort-option"
+          class="input-field"
+          [(ngModel)]="sortOption"
+          (ngModelChange)="sortPayments()"
+          aria-label="مرتب‌سازی پرداخت‌ها"
+        >
+          <option value="date-desc">جدیدترین</option>
+          <option value="date-asc">قدیمی‌ترین</option>
+          <option value="amount-desc">بیشترین مبلغ</option>
+          <option value="amount-asc">کمترین مبلغ</option>
+        </select>
+      </div>
+      <div class="input-label">
+        <label for="status-filter">فیلتر وضعیت</label>
+        <select
+          id="status-filter"
+          [(ngModel)]="statusFilter"
+          (ngModelChange)="filterPayments()"
+          class="input-field status-filter"
+          aria-label="فیلتر بر اساس وضعیت پرداخت"
+        >
+          <option value="">همه وضعیت‌ها</option>
+          <option value="موفق">موفق</option>
+          <option value="ناموفق">ناموفق</option>
+          <option value="در انتظار">در انتظار</option>
+        </select>
+      </div>
+      <button
+        class="btn btn-clear"
+        (click)="clearAllPayments()"
+        aria-label="حذف همه پرداخت‌ها"
+      >
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#fff"/>
+        </svg>
+        حذف همه پرداخت‌ها
+      </button>
+    </div>
+
+    <!-- Custom Alert -->
+    <div class="custom-alert" *ngIf="showAlert" @alertAnimation>
+      <div class="alert-content {{ alertType }}">
+        <p>{{ alertMessage }}</p>
+        <button class="btn btn-close" (click)="showAlert = false" aria-label="بستن اعلان">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" fill="#2e1606"/>
+          </svg>
+          بستن
+        </button>
+      </div>
+    </div>
+
+    <!-- Back to Profile -->
+    <div class="back-to-profile" *ngIf="filteredPayments.length > 0 || (!statusFilter && !searchTerm)">
+      <button class="btn btn-back" [routerLink]="['/profile']" aria-label="بازگشت به پروفایل">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+          <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" fill="#2e1606"/>
+        </svg>
+        بازگشت به پروفایل
+      </button>
     </div>
   </div>
-  <ng-template #noPayments>
-    <p>هیچ پرداختی ثبت نشده است.</p>
-  </ng-template>
 </div>

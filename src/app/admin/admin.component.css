@@ -1,116 +1,471 @@
 .admin-panel {
   display: flex;
-  height: 100vh;
-  direction: rtl;
-  background-image: url('/assets/imge/sun.jpg');
+  flex-direction: column;
   min-height: 100vh;
-  font-family: 'Roboto', 'Arial', sans-serif;
-  overflow: hidden;
-  animation: fadeIn 0.5s ease-in-out;
+  background: #FFF8E1;
+  font-family: 'Vazir', Arial, sans-serif;
+  direction: rtl;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #A58C61, #E6D7A3);
+  box-shadow: 0 2px 4px rgba(74, 44, 42, 0.1);
+}
+
+.panel-title {
+  color: #4A2C2A;
+  font-size: 1.3rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-bar input {
+  padding: 6px 28px 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #E6D7A3;
+}
+
+.search-bar i {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  color: #4A2C2A;
+}
+
+.notifications {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #A58C61;
+  color: #FFFFFF;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 0.7rem;
+}
+
+.profile-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4A2C2A;
+  cursor: pointer;
+}
+
+.profile-menu span {
+  font-size: 1rem;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(74, 44, 42, 0.1);
+  border-radius: 6px;
+  padding: 6px 0;
+  z-index: 100;
+}
+
+.profile-menu:hover .dropdown {
+  display: block;
+}
+
+.dropdown a {
+  display: block;
+  padding: 6px 12px;
+  color: #4A2C2A;
+  text-decoration: none;
+}
+
+.dropdown a:hover {
+  background: #E6D7A3;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 64px);
 }
 
 .sidebar {
-  width: 260px;
-  background: #261C15; 
-  padding: 30px;
-  color: #E4E2E0; /* خاکستری مایل به بژ برای متن */
-  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.15);
-  transition: all 0.4s ease;
-  animation: slideIn 0.5s ease-out;
+  width: 220px;
+  background: #FFFFFF;
+  padding: 12px;
+  box-shadow: 2px 0 4px rgba(74, 44, 42, 0.1);
+  transition: width 0.3s ease;
 }
 
-@keyframes slideIn {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.sidebar h2 {
+  color: #4A2C2A;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
-  direction: rtl;
 }
 
-.sidebar li {
-  margin: 20px 0;
-  text-align: right;
-  position: relative;
+.sidebar ul li {
+  margin-bottom: 6px;
 }
 
-.sidebar a {
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: #4A2C2A;
   text-decoration: none;
-  color: #E4E2E0;
-  display: block;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
+  border-radius: 6px;
+  transition: background 0.3s ease;
 }
 
-.sidebar a:hover {
-  color: #F28A6E; /* مرجانی گرم */
-  background-color: rgba(242, 138, 110, 0.15);
-  transform: scale(1.05);
+.sidebar ul li a:hover {
+  background: rgba(165, 140, 97, 0.1);
+}
+
+.sidebar ul li a.active {
+  background: #A58C61;
+  color: #FFFFFF;
 }
 
 .content {
   flex: 1;
-  padding: 40px;
-  direction: rtl;
-  background: url('/assets/imge/sun.jpg') no-repeat center center/cover;
-  box-shadow: -3px 0 15px rgba(0, 0, 0, 0.1);
-  border-radius: 15px 0 0 15px;
-  overflow-y: auto;
-  transition: all 0.4s ease;
-  animation: slideInContent 0.5s ease-out;
+  padding: 16px;
+  background: #FFF8E1;
+  min-height: calc(100vh - 64px);
 }
 
-@keyframes slideInContent {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+/* Dashboard Styles */
+.dashboard {
+  background: #FFF8E1;
 }
 
-.content h1, .content h2, .content h3 {
-  color: #261C15; /* قهوه‌ای برشته */
-  margin-bottom: 20px;
+.widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.widget {
+  background: #FFFFFF;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.widget:hover {
+  transform: translateY(-3px);
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.chart-container {
+  background: #FFFFFF;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recent-activities, .quick-actions {
+  background: #FFFFFF;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 8px 12px;
+  background: #F28A6E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+  background: #E06B53;
+}
+
+/* Users, Products, Reports, Orders Shared Styles */
+.users-container, .products-container, .reports-container, .orders-container {
+  background: #FFF8E1;
+}
+
+.add-user-form, .add-product-form, .add-report-form, .search-controls {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #FFFFFF;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-input, .search-input {
+  padding: 10px;
+  border: 2px solid #3B6B5A;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  color: #261C15;
+  background: #FDF0E0;
+}
+
+.form-input:focus, .search-input:focus {
+  border-color: #F28A6E;
+  outline: none;
+}
+
+.add-btn, .edit-btn, .save-btn, .cancel-btn, .delete-btn, .clear-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.add-btn, .save-btn {
+  background: #F28A6E;
+  color: #FFFFFF;
+}
+
+.add-btn:hover, .save-btn:hover {
+  background: #E06B53;
+  transform: scale(1.05);
+}
+
+.edit-btn {
+  background: #3B6B5A;
+  color: #FFFFFF;
+}
+
+.edit-btn:hover {
+  background: #2F5749;
+  transform: scale(1.05);
+}
+
+.cancel-btn, .delete-btn, .clear-btn {
+  background: #261C15;
+  color: #E4E2E0;
+}
+
+.cancel-btn:hover, .delete-btn:hover, .clear-btn:hover {
+  background: #1A120F;
+  transform: scale(1.05);
+}
+
+.users-table, .products-table, .reports-table, .orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: #261C15;
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.users-table th, .users-table td,
+.products-table th, .products-table td,
+.reports-table th, .reports-table td,
+.orders-table th, .orders-table td {
+  border: 1px solid #3B6B5A;
+  padding: 10px;
+  text-align: center;
+}
+
+.users-table th, .products-table th, .reports-table th, .orders-table th {
+  background: #261C15;
+  color: #E4E2E0;
+}
+
+.users-table tr:hover td, .products-table tr:hover td,
+.reports-table tr:hover td, .orders-table tr:hover td {
+  background: rgba(242, 138, 110, 0.1);
+}
+
+.edit-input {
+  padding: 6px;
+  border: 2px solid #3B6B5A;
+  border-radius: 6px;
+  width: 100px;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+  background: #FDF0E0;
+  color: #261C15;
+}
+
+.edit-input:focus {
+  border-color: #F28A6E;
+  outline: none;
+}
+
+.edit-controls, .button-group {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.no-users, .no-products, .no-reports, .no-orders {
+  color: #261C15;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.95rem;
+}
+
+.success-message, .custom-alert .alert-content {
+  background: #3B6B5A;
+  color: #FFFFFF;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+
+.orders-table th.sortable {
+  cursor: pointer;
+}
+
+.orders-table th.sortable:hover {
+  background: linear-gradient(90deg, #A58C61, #E6D7A3);
+}
+
+.sort-icon {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 0.8rem;
+}
+
+.custom-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
-  .admin-panel {
-    flex-direction: column;
-    height: auto;
-  }
-
   .sidebar {
+    width: 180px;
+  }
+
+  .sidebar.collapsed {
+    width: 50px;
+  }
+
+  .content, .dashboard, .users-container, .products-container, .reports-container, .orders-container {
+    padding: 12px;
+  }
+
+  .widgets, .charts {
+    grid-template-columns: 1fr;
+  }
+
+  .users-table, .products-table, .reports-table, .orders-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .users-table th, .users-table td,
+  .products-table th, .products-table td,
+  .reports-table th, .reports-table td,
+  .orders-table th, .orders-table td {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .edit-input {
+    width: 80px;
+    font-size: 0.8rem;
+  }
+
+  .edit-controls, .button-group {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .add-btn, .edit-btn, .save-btn, .cancel-btn, .delete-btn, .clear-btn {
     width: 100%;
-    padding: 20px;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
-    animation: none;
-  }
-
-  .sidebar a {
-    font-size: 1rem;
-    padding: 10px 15px;
-  }
-
-  .content {
-    padding: 20px;
-    border-radius: 0;
-    animation: none;
+    margin-right: 0;
   }
 }
 
 @media (max-width: 480px) {
-  .sidebar a {
-    font-size: 0.9rem;
-    padding: 8px 10px;
+  .sidebar {
+    width: 160px;
   }
 
-  .content {
-    padding: 15px;
+  .sidebar.collapsed {
+    width: 45px;
+  }
+
+  .panel-title {
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  .form-input, .add-btn, .edit-btn, .save-btn, .cancel-btn, .delete-btn, .clear-btn {
+    font-size: 0.85rem;
+  }
+
+  .users-table th, .users-table td,
+  .products-table th, .products-table td,
+  .reports-table th, .reports-table td,
+  .orders-table th, .orders-table td {
+    font-size: 0.8rem;
   }
 }

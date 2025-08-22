@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AUsersComponent } from './a-users/a-users.component';
 import { AReportsComponent } from './a-reports/a-reports.component';
@@ -9,7 +8,6 @@ import { AdminProductsComponent } from './a-products/a-products.component'; // Ø
 
 @NgModule({
   declarations: [
-    AdminComponent,
     AUsersComponent,
     AReportsComponent,
     AdminProductsComponent 
