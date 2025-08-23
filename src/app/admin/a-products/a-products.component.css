@@ -1,14 +1,16 @@
+
+/* استایل‌های کانتینر محصولات */
 .products-container {
   direction: rtl;
   padding: 24px;
-  background: #F5F6FA;
+  background: var(--chamoisee);
   min-height: 100vh;
   font-family: 'Vazir', Arial, sans-serif;
   animation: fadeIn 0.5s ease-in-out;
 }
 
 h3 {
-  color: #1F2A44;
+  color: var(--black-bean);
   margin-bottom: 24px;
   font-size: 1.75rem;
   font-weight: bold;
@@ -20,10 +22,10 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  background: #FFFFFF;
+  background: #ffffff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(73, 15, 14, 0.1);
 }
 
 .products-table {
@@ -31,27 +33,27 @@ h3 {
   border-collapse: collapse;
   margin-top: 20px;
   font-size: 1rem;
-  color: #1F2A44;
-  background: #FFFFFF;
+  color: var(--black-bean);
+  background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 12px rgba(73, 15, 14, 0.15);
 }
 
 .products-table th,
 .products-table td {
-  border: 1px solid #D1D5DB;
+  border: 2px solid var(--bistre);
   padding: 16px;
   text-align: center;
 }
 
 .products-table th {
-  background: #1F2A44;
-  color: #FFFFFF;
+  background: var(--black-bean);
+  color:  #ffffff;
 }
 
 .products-table tr:hover td {
-  background: rgba(96, 165, 250, 0.1);
+  background: rgba(104, 59, 20, 0.1);
 }
 
 .edit-controls {
@@ -61,13 +63,41 @@ h3 {
 }
 
 .no-products {
-  color: #1F2A44;
+  color: var(--black-bean);
   text-align: center;
   margin-top: 20px;
   font-size: 1rem;
 }
 
+.success-message {
+  background: var(--sepia);
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* رسانه‌ها */
 @media (max-width: 768px) {
+  .products-container {
+    padding: 12px;
+  }
+
   .products-table {
     display: block;
     overflow-x: auto;

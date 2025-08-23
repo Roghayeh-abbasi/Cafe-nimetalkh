@@ -1,14 +1,16 @@
+
+/* استایل‌های کانتینر گزارش‌ها */
 .reports-container {
   direction: rtl;
   padding: 20px;
-  background-color: #FDF0E0;
+  background: var(--chamoisee);
   min-height: 100vh;
-  font-family: 'Roboto', 'Arial', sans-serif;
+  font-family: 'Vazir', Arial, sans-serif;
   animation: fadeIn 0.5s ease-in-out;
 }
 
 h3 {
-  color: #261C15;
+  color: var(--black-bean);
   margin-bottom: 20px;
   font-size: 1.5rem;
   text-align: right;
@@ -19,64 +21,11 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  background-color: #FFFFFF;
+  background: #ffffff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(73, 15, 14, 0.1);
   transition: all 0.3s ease;
-}
-
-.form-input {
-  padding: 12px;
-  border: 2px solid #3B6B5A;
-  border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 1rem;
-  color: #261C15;
-  background-color: #FDF0E0;
-  transition: border-color 0.3s ease;
-}
-
-.form-input:focus {
-  border-color: #F28A6E;
-  outline: none;
-}
-
-.search-input {
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  font-size: 1rem;
-  border: 2px solid #3B6B5A;
-  border-radius: 8px;
-  padding: 12px;
-  background-color: #FDF0E0;
-  color: #261C15;
-  transition: border-color 0.3s ease;
-}
-
-.search-input:focus {
-  border-color: #F28A6E;
-  outline: none;
-}
-
-.add-btn {
-  padding: 12px;
-  background-color: #F28A6E;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
-  font-size: 1rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.add-btn:hover {
-  background-color: #E06B53;
-  transform: scale(1.05);
 }
 
 .reports-table {
@@ -84,16 +33,16 @@ h3 {
   border-collapse: collapse;
   margin-top: 20px;
   font-size: 1rem;
-  color: #261C15;
-  background-color: #FFFFFF;
+  color: var(--black-bean);
+  background: #ffffff;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(73, 15, 14, 0.1);
 }
 
 .reports-table th,
 .reports-table td {
-  border: 2px solid #3B6B5A;
+  border: 2px solid var(--bistre);
   padding: 12px;
   text-align: center;
   white-space: nowrap;
@@ -101,107 +50,24 @@ h3 {
 }
 
 .reports-table th {
-  background-color: #261C15;
-  color: #E4E2E0;
+  background: var(--black-bean);
+  color: #ffffff;
 }
 
 .reports-table tr:hover td {
-  background-color: rgba(242, 138, 110, 0.1);
-}
-
-.edit-input {
-  padding: 8px;
-  border: 2px solid #3B6B5A;
-  border-radius: 8px;
-  width: 100px;
-  box-sizing: border-box;
-  font-size: 0.9rem;
-  background-color: #FDF0E0;
-  color: #261C15;
-  transition: border-color 0.3s ease;
-}
-
-.edit-input:focus {
-  border-color: #F28A6E;
-  outline: none;
-}
-
-.edit-btn {
-  padding: 8px 12px;
-  background-color: #3B6B5A;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-right: 5px;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.edit-btn:hover {
-  background-color: #2F5749;
-  transform: scale(1.05);
-}
-
-.save-btn {
-  padding: 8px 12px;
-  background-color: #F28A6E;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-right: 5px;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.save-btn:hover {
-  background-color: #E06B53;
-  transform: scale(1.05);
-}
-
-.cancel-btn {
-  padding: 8px 12px;
-  background-color: #261C15;
-  color: #E4E2E0;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.cancel-btn:hover {
-  background-color: #1A120F;
-  transform: scale(1.05);
-}
-
-.delete-btn {
-  padding: 8px 12px;
-  background-color: #261C15;
-  color: #E4E2E0;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.delete-btn:hover {
-  background-color: #1A120F;
-  transform: scale(1.05);
+  background: rgba(104, 59, 20, 0.1);
 }
 
 .no-reports {
-  color: #261C15;
+  color: var(--black-bean);
   text-align: center;
   margin-top: 20px;
   font-size: 1rem;
 }
 
 .success-message {
-  background-color: #3B6B5A;
-  color: #FFFFFF;
+  background: var(--sepia);
+  color: #ffffff;
   padding: 15px;
   border-radius: 8px;
   text-align: center;
@@ -212,7 +78,22 @@ h3 {
   animation: popIn 0.3s ease-out;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* رسانه‌ها */
 @media (max-width: 768px) {
+  .reports-container {
+    padding: 12px;
+  }
+
   .reports-table {
     display: block;
     overflow-x: auto;
@@ -225,36 +106,13 @@ h3 {
     padding: 10px;
   }
 
-  .edit-input {
-    width: 80px;
-    font-size: 0.8rem;
-  }
-
-  .edit-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .save-btn,
-  .cancel-btn {
-    width: 100%;
-    margin-right: 0;
-  }
-
   .add-report-form {
     padding: 15px;
   }
 }
 
 @media (max-width: 480px) {
-  .form-input,
-  .add-btn {
-    font-size: 0.9rem;
-  }
-
-  .reports-table th,
-  .reports-table td {
-    font-size: 0.8rem;
+  h3 {
+    font-size: 1.25rem;
   }
 }

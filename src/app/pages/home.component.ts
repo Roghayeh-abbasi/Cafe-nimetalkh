@@ -83,17 +83,33 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  addToCart(product: Product): void {
-    console.log('تلاش برای افزودن محصول:', product);
-    if (!this.isLoggedIn) {
-      console.log('کاربر وارد نشده است، ریدایرکت به /auth/login');
-      this.router.navigate(['/auth/login'], { queryParams: { returnUrl: '/' } });
-      return;
-    }
-    this.cartService.addToCart(product);
-    this.cartItemCount = this.cartService.getTotalItems();
-    console.log('محصول به سبد اضافه شد:', product, 'سبد فعلی:', this.cartService.getCart());
+ addToCart(product: Product): void {
+  console.log('تلاش برای افزودن محصول:', product);
+  if (!this.isLoggedIn) {
+    console.log('کاربر وارد نشده است، ریدایرکت به /auth/login');
+    this.router.navigate(['/auth/login'], { queryParams: { returnUrl: '/' } });
+    return;
   }
+  // تنظیم مقدار پیش‌فرض برای quantity
+  const productWithQuantity = {
+    ...product,
+    quantity: product.quantity ?? 1 // اگر quantity undefined باشد، 1 قرار بده
+  };
+  this.cartService.addToCart(productWithQuantity);
+  this.cartItemCount = this.cartService.getTotalItems();
+  console.log('محصول به سبد اضافه شد:', productWithQuantity, 'سبد فعلی:', this.cartService.getCart());
+}
+  // addToCart(product: Product): void {
+  //   console.log('تلاش برای افزودن محصول:', product);
+  //   if (!this.isLoggedIn) {
+  //     console.log('کاربر وارد نشده است، ریدایرکت به /auth/login');
+  //     this.router.navigate(['/auth/login'], { queryParams: { returnUrl: '/' } });
+  //     return;
+  //   }
+  //   this.cartService.addToCart(product);
+  //   this.cartItemCount = this.cartService.getTotalItems();
+  //   console.log('محصول به سبد اضافه شد:', product, 'سبد فعلی:', this.cartService.getCart());
+  // }
 
   showCartPage(): void {
     console.log('تلاش برای رفتن به صفحه سبد خرید، تعداد محصولات:', this.cartService.getTotalItems());

@@ -1,0 +1,140 @@
+.settings {
+  padding: 20px;
+  background: var(--chamoisee);
+  min-height: 100%;
+  font-family: 'Vazir', Arial, sans-serif;
+  direction: rtl;
+}
+
+.settings h1 {
+  color: var(--black-bean);
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  text-align: right;
+}
+
+.accordion {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(73, 15, 14, 0.1);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: linear-gradient(90deg, var(--russet), var(--chamoisee));
+  color:  #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.accordion-header:hover {
+  background: linear-gradient(90deg, var(--chamoisee), var(--russet));
+}
+
+.accordion-header i {
+  margin-left: 10px;
+}
+
+.accordion-content {
+  padding: 20px;
+  background: #ffffff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: var(--black-bean);
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-group input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.error-text {
+  color: var(--sepia);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.alert-content {
+  margin-bottom: 16px;
+  animation: popIn 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .settings {
+    padding: 15px;
+  }
+
+  .settings h1 {
+    font-size: 1.5rem;
+  }
+
+  .accordion-header {
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+
+  .accordion-content {
+    padding: 15px;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group textarea,
+  .form-group select {
+    font-size: 0.9rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings h1 {
+    font-size: 1.3rem;
+  }
+
+  .accordion-header {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .accordion-content {
+    padding: 10px;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group textarea,
+  .form-group select {
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,244 @@
+<div class="settings">
+  <h1>تنظیمات</h1>
+
+  <!-- پیام‌های بازخورد -->
+  <div *ngIf="successMessage" class="alert-content success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert-content error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- تنظیمات عمومی -->
+  <div class="accordion">
+    <h3 (click)="toggleSection('general')" class="accordion-header">
+      <i class="fas fa-cog"></i> تنظیمات عمومی
+      <i class="fas" [ngClass]="activeSection === 'general' ? 'fa-chevron-down' : 'fa-chevron-left'"></i>
+    </h3>
+    <div *ngIf="activeSection === 'general'" class="accordion-content">
+      <form [formGroup]="generalForm" (ngSubmit)="saveSettings(generalForm, 'general')">
+        <div class="form-group">
+          <label for="cafeName">نام کافه</label>
+          <input id="cafeName" formControlName="cafeName" class="form-input" placeholder="نام کافه">
+          <div *ngIf="generalForm.get('cafeName')?.invalid && generalForm.get('cafeName')?.touched" class="error-text">
+            نام کافه اجباری است و باید حداقل 3 کاراکتر باشد
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">ایمیل</label>
+          <input id="email" formControlName="email" class="form-input" placeholder="ایمیل">
+          <div *ngIf="generalForm.get('email')?.invalid && generalForm.get('email')?.touched" class="error-text">
+            ایمیل معتبر وارد کنید
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone">تلفن</label>
+          <input id="phone" formControlName="phone" class="form-input" placeholder="شماره تلفن">
+          <div *ngIf="generalForm.get('phone')?.invalid && generalForm.get('phone')?.touched" class="error-text">
+            شماره تلفن باید 10 یا 11 رقم باشد
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="address">آدرس</label>
+          <textarea id="address" formControlName="address" class="form-input" placeholder="آدرس کافه"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="workingHours">ساعات کاری</label>
+          <input id="workingHours" formControlName="workingHours" class="form-input" placeholder="مثال: 8:00-22:00">
+          <div *ngIf="generalForm.get('workingHours')?.invalid && generalForm.get('workingHours')?.touched" class="error-text">
+            ساعات کاری اجباری است
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="save-btn" [disabled]="generalForm.invalid">ذخیره</button>
+          <button type="button" class="cancel-btn" (click)="resetForm(generalForm)">لغو</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- تنظیمات سفارشات -->
+  <div class="accordion">
+    <h3 (click)="toggleSection('orders')" class="accordion-header">
+      <i class="fas fa-shopping-cart"></i> تنظیمات سفارشات
+      <i class="fas" [ngClass]="activeSection === 'orders' ? 'fa-chevron-down' : 'fa-chevron-left'"></i>
+    </h3>
+    <div *ngIf="activeSection === 'orders'" class="accordion-content">
+      <form [formGroup]="ordersForm" (ngSubmit)="saveSettings(ordersForm, 'orders')">
+        <div class="form-group">
+          <label for="minOrderAmount">حداقل مبلغ سفارش (تومان)</label>
+          <input id="minOrderAmount" formControlName="minOrderAmount" class="form-input" type="number" placeholder="0">
+          <div *ngIf="ordersForm.get('minOrderAmount')?.invalid && ordersForm.get('minOrderAmount')?.touched" class="error-text">
+            مبلغ باید عدد معتبر باشد
+          </div>
+        </div>
+        <div class="form-group">
+          <label>فعال کردن سفارش آنلاین</label>
+          <input type="checkbox" formControlName="onlineOrdersEnabled">
+        </div>
+        <div class="form-group">
+          <label for="deliveryTimeSlots">بازه‌های زمانی تحویل</label>
+          <textarea id="deliveryTimeSlots" formControlName="deliveryTimeSlots" class="form-input" placeholder="مثال: 10:00-12:00, 14:00-16:00"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="orderStatuses">وضعیت‌های سفارش</label>
+          <textarea id="orderStatuses" formControlName="orderStatuses" class="form-input" placeholder="مثال: در انتظار, در حال آماده‌سازی, ارسال شده"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="deliveryFee">هزینه ارسال (تومان)</label>
+          <input id="deliveryFee" formControlName="deliveryFee" class="form-input" type="number" placeholder="0">
+          <div *ngIf="ordersForm.get('deliveryFee')?.invalid && ordersForm.get('deliveryFee')?.touched" class="error-text">
+            هزینه ارسال باید عدد معتبر باشد
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="save-btn" [disabled]="ordersForm.invalid">ذخیره</button>
+          <button type="button" class="cancel-btn" (click)="resetForm(ordersForm)">لغو</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- تنظیمات محصولات -->
+  <div class="accordion">
+    <h3 (click)="toggleSection('products')" class="accordion-header">
+      <i class="fas fa-box"></i> تنظیمات محصولات
+      <i class="fas" [ngClass]="activeSection === 'products' ? 'fa-chevron-down' : 'fa-chevron-left'"></i>
+    </h3>
+    <div *ngIf="activeSection === 'products'" class="accordion-content">
+      <form [formGroup]="productsForm" (ngSubmit)="saveSettings(productsForm, 'products')">
+        <div class="form-group">
+          <label for="defaultCategory">دسته‌بندی پیش‌فرض</label>
+          <select id="defaultCategory" formControlName="defaultCategory" class="form-input">
+            <option value="">انتخاب کنید</option>
+            <option value="coffee">قهوه</option>
+            <option value="dessert">دسر</option>
+            <option value="drinks">نوشیدنی</option>
+          </select>
+          <div *ngIf="productsForm.get('defaultCategory')?.invalid && generalForm.get('defaultCategory')?.touched" class="error-text">
+            دسته‌بندی اجباری است
+          </div>
+        </div>
+        <div class="form-group">
+          <label>نمایش محصولات ناموجود</label>
+          <input type="checkbox" formControlName="showOutOfStock">
+        </div>
+        <div class="form-group">
+          <label for="defaultTaxRate">نرخ مالیات پیش‌فرض (%)</label>
+          <input id="defaultTaxRate" formControlName="defaultTaxRate" class="form-input" type="number" placeholder="0">
+          <div *ngIf="productsForm.get('defaultTaxRate')?.invalid && generalForm.get('defaultTaxRate')?.touched" class="error-text">
+            نرخ مالیات باید عدد معتبر باشد
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="save-btn" [disabled]="productsForm.invalid">ذخیره</button>
+          <button type="button" class="cancel-btn" (click)="resetForm(productsForm)">لغو</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- تنظیمات کاربران -->
+  <div class="accordion">
+    <h3 (click)="toggleSection('users')" class="accordion-header">
+      <i class="fas fa-users"></i> تنظیمات کاربران
+      <i class="fas" [ngClass]="activeSection === 'users' ? 'fa-chevron-down' : 'fa-chevron-left'"></i>
+    </h3>
+    <div *ngIf="activeSection === 'users'" class="accordion-content">
+      <form [formGroup]="usersForm" (ngSubmit)="saveSettings(usersForm, 'users')">
+        <div class="form-group">
+          <label>اجازه سفارش به مهمان</label>
+          <input type="checkbox" formControlName="allowGuestOrders">
+        </div>
+        <div class="form-group">
+          <label>فعال کردن اطلاع‌رسانی ایمیلی</label>
+          <input type="checkbox" formControlName="emailNotifications">
+        </div>
+        <div class="form-group">
+          <label for="adminAccessLevel">سطح دسترسی ادمین</label>
+          <select id="adminAccessLevel" formControlName="adminAccessLevel" class="form-input">
+            <option value="full">کامل</option>
+            <option value="limited">محدود</option>
+          </select>
+          <div *ngIf="usersForm.get('adminAccessLevel')?.invalid && generalForm.get('adminAccessLevel')?.touched" class="error-text">
+            سطح دسترسی اجباری است
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="save-btn" [disabled]="usersForm.invalid">ذخیره</button>
+          <button type="button" class="cancel-btn" (click)="resetForm(usersForm)">لغو</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- تنظیمات گزارشات -->
+  <div class="accordion">
+    <h3 (click)="toggleSection('reports')" class="accordion-header">
+      <i class="fas fa-chart-bar"></i> تنظیمات گزارشات
+      <i class="fas" [ngClass]="activeSection === 'reports' ? 'fa-chevron-down' : 'fa-chevron-left'"></i>
+    </h3>
+    <div *ngIf="activeSection === 'reports'" class="accordion-content">
+      <form [formGroup]="reportsForm" (ngSubmit)="saveSettings(reportsForm, 'reports')">
+        <div class="form-group">
+          <label for="defaultReportRange">بازه زمانی پیش‌فرض گزارش</label>
+          <select id="defaultReportRange" formControlName="defaultReportRange" class="form-input">
+            <option value="daily">روزانه</option>
+            <option value="weekly">هفتگی</option>
+            <option value="monthly">ماهانه</option>
+          </select>
+          <div *ngIf="reportsForm.get('defaultReportRange')?.invalid && generalForm.get('defaultReportRange')?.touched" class="error-text">
+            بازه زمانی اجباری است
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exportFormat">فرمت خروجی گزارش</label>
+          <select id="exportFormat" formControlName="exportFormat" class="form-input">
+            <option value="pdf">PDF</option>
+            <option value="excel">Excel</option>
+            <option value="csv">CSV</option>
+          </select>
+          <div *ngIf="reportsForm.get('exportFormat')?.invalid && generalForm.get('exportFormat')?.touched" class="error-text">
+            فرمت خروجی اجباری است
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="save-btn" [disabled]="reportsForm.invalid">ذخیره</button>
+          <button type="button" class="cancel-btn" (click)="resetForm(reportsForm)">لغو</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- تنظیمات داشبورد -->
+  <div class="accordion">
+    <h3 (click)="toggleSection('dashboard')" class="accordion-header">
+      <i class="fas fa-tachometer-alt"></i> تنظیمات داشبورد
+      <i class="fas" [ngClass]="activeSection === 'dashboard' ? 'fa-chevron-down' : 'fa-chevron-left'"></i>
+    </h3>
+    <div *ngIf="activeSection === 'dashboard'" class="accordion-content">
+      <form [formGroup]="dashboardForm" (ngSubmit)="saveSettings(dashboardForm, 'dashboard')">
+        <div class="form-group">
+          <label>نمایش ویجت تعداد کاربران</label>
+          <input type="checkbox" formControlName="showUsersWidget">
+        </div>
+        <div class="form-group">
+          <label>نمایش ویجت سفارشات امروز</label>
+          <input type="checkbox" formControlName="showOrdersWidget">
+        </div>
+        <div class="form-group">
+          <label>نمایش ویجت درآمد امروز</label>
+          <input type="checkbox" formControlName="showRevenueWidget">
+        </div>
+        <div class="form-group">
+          <label>نمایش ویجت پیام‌های جدید</label>
+          <input type="checkbox" formControlName="showMessagesWidget">
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="save-btn">ذخیره</button>
+          <button type="button" class="cancel-btn" (click)="resetForm(dashboardForm)">لغو</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

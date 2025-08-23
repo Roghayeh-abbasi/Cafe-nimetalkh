@@ -1,5 +1,5 @@
 <div class="cart-container">
-  <h2>سبد خرید</h2>
+  <h2><i class="fas fa-shopping-cart"></i> سبد خرید</h2>
   <div *ngIf="currentView === 'default'" class="cart-items">
     <div *ngIf="cart.length === 0">
       <p>سبد خرید شما خالی است.</p>
@@ -7,87 +7,98 @@
     <div *ngFor="let item of cart; let i = index" class="cart-item">
       <img [src]="item.image" [alt]="item.name" class="cart-item-image">
       <div class="cart-item-details">
-        <h4>{{ item.name }}</h4>
+        <h4>{{ item.name }} - {{ item.quantity }} عدد</h4>
         <p *ngIf="item.discount && item.discount > 0">
-          <span class="original-price">{{ item.price }} تومان</span>
-          <span class="discounted-price">{{ getDiscountedPrice(item) }} تومان</span>
+          <span class="original-price">{{ item.price | number:'1.0-0' }} تومان</span>
+          <span class="discounted-price">{{ getDiscountedPrice(item) * item.quantity | number:'1.0-0' }} تومان</span>
           <span class="discount-badge">{{ item.discount }}% تخفیف</span>
         </p>
-        <p *ngIf="!item.discount || item.discount === 0">{{ item.price }} تومان</p>
+        <p *ngIf="!item.discount || item.discount === 0">{{ item.price * item.quantity | number:'1.0-0' }} تومان</p>
       </div>
-      <button (click)="removeFromCart(i)" class="btn-remove">حذف</button>
+      <div class="cart-item-actions">
+        <button (click)="decreaseQuantity(i)" class="btn-quantity">-</button>
+        <span class="quantity-display">{{ item.quantity }}</span>
+        <button (click)="increaseQuantity(i)" class="btn-quantity">+</button>
+        <button (click)="removeFromCart(i)" class="btn-remove"><i class="fas fa-trash"></i> حذف</button>
+      </div>
     </div>
     <div class="cart-total" *ngIf="cart.length > 0">
-      <p>جمع کل: {{ totalPrice }} تومان</p>
-      <button (click)="goToCheckout()" class="btn-checkout">پرداخت</button>
+      <p>جمع کل: {{ totalPrice | number:'1.0-0' }} تومان</p>
+      <div class="cart-total-actions">
+        <button (click)="goToCheckout()" class="btn-checkout"><i class="fas fa-credit-card"></i> پرداخت</button>
+      </div>
     </div>
   </div>
 
   <div *ngIf="currentView === 'checkout' && orderType === 'select'" class="order-type-selection">
-    <h3>نوع سفارش را انتخاب کنید</h3>
-    <button (click)="selectOrderType('online')" class="btn-order-type">سفارش آنلاین (تحویل در آدرس)</button>
-    <button (click)="selectOrderType('in-person')" class="btn-order-type">سفارش حضوری (داخل مجموعه)</button>
+    <h3><i class="fas fa-list"></i> نوع سفارش را انتخاب کنید</h3>
+    <div class="order-type-actions">
+      <button (click)="selectOrderType('online')" class="btn-order-type"><i class="fas fa-truck"></i> سفارش آنلاین</button>
+      <button (click)="selectOrderType('in-person')" class="btn-order-type"><i class="fas fa-store"></i> سفارش حضوری</button>
+    </div>
   </div>
 
   <div *ngIf="currentView === 'checkout' && orderType === 'online'" class="checkout-panel">
-    <h3>تکمیل سفارش (آنلاین)</h3>
+    <h3><i class="fas fa-truck"></i> تکمیل سفارش (آنلاین)</h3>
     <div class="order-details">
       <h4>جزئیات سفارش</h4>
       <div *ngFor="let item of cart; let i = index" class="cart-item">
         <div class="cart-item-details">
-          <h4>{{ item.name }}</h4>
+          <h4>{{ item.name }} - {{ item.quantity }} عدد</h4>
           <p *ngIf="item.discount && item.discount > 0">
-            <span class="discounted-price">{{ getDiscountedPrice(item) }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(item) * item.quantity | number:'1.0-0' }} تومان</span>
           </p>
-          <p *ngIf="!item.discount || item.discount === 0">{{ item.price }} تومان</p>
+          <p *ngIf="!item.discount || item.discount === 0">{{ item.price * item.quantity | number:'1.0-0' }} تومان</p>
         </div>
       </div>
-      <p>جمع کل: {{ getTotalPrice() }} تومان</p>
+      <p>جمع کل: {{ getTotalPrice() | number:'1.0-0' }} تومان</p>
     </div>
     <div class="delivery-address">
-      <h4>آدرس تحویل</h4>
+      <h4><i class="fas fa-map-marker-alt"></i> آدرس تحویل</h4>
       <div class="address-inputs">
         <div class="search-container">
           <input type="text" [(ngModel)]="searchQuery" placeholder="جستجوی آدرس (مثلاً: تهران، خیابان انقلاب)..." class="search-input">
-          <button (click)="searchAddress()" class="btn-search">جستجو</button>
+          <button (click)="searchAddress()" class="btn-search"><i class="fas fa-search"></i> جستجو</button>
         </div>
-        <button (click)="getCurrentLocation()" class="btn-gps">موقعیت فعلی من</button>
+        <button (click)="getCurrentLocation()" class="btn-gps"><i class="fas fa-location-arrow"></i> موقعیت فعلی</button>
         <div id="map" class="map-container"></div>
-        <textarea [(ngModel)]="deliveryAddress" placeholder="آدرس انتخاب‌شده..." rows="2" readonly></textarea>
-        <textarea [(ngModel)]="addressNotes" placeholder="توضیحات آدرس (مثل شماره واحد)..." rows="2"></textarea>
+        <textarea [(ngModel)]="deliveryAddress" placeholder="آدرس انتخاب‌شده..." rows="2" readonly class="form-input"></textarea>
+        <textarea [(ngModel)]="addressNotes" placeholder="توضیحات آدرس (مثل شماره واحد)..." rows="2" class="form-input"></textarea>
       </div>
     </div>
-    <button (click)="submitOrder()" class="btn-submit-order">ثبت سفارش</button>
-    <button (click)="goBack()" class="btn-close-cart">بازگشت</button>
+    <div class="checkout-actions">
+      <button (click)="submitOrder()" class="btn-submit-order"><i class="fas fa-check"></i> ثبت سفارش</button>
+      <button (click)="goBack()" class="btn-close-cart"><i class="fas fa-arrow-right"></i> بازگشت</button>
+    </div>
   </div>
 
   <div *ngIf="currentView === 'checkout' && orderType === 'in-person'" class="checkout-panel">
-    <h3>تکمیل سفارش (حضوری)</h3>
+    <h3><i class="fas fa-store"></i> تکمیل سفارش (حضوری)</h3>
     <div class="order-details">
       <h4>جزئیات سفارش</h4>
       <div *ngFor="let item of cart; let i = index" class="cart-item">
         <div class="cart-item-details">
-          <h4>{{ item.name }}</h4>
+          <h4>{{ item.name }} - {{ item.quantity }} عدد</h4>
           <p *ngIf="item.discount && item.discount > 0">
-            <span class="discounted-price">{{ getDiscountedPrice(item) }} تومان</span>
+            <span class="discounted-price">{{ getDiscountedPrice(item) * item.quantity | number:'1.0-0' }} تومان</span>
           </p>
-          <p *ngIf="!item.discount || item.discount === 0">{{ item.price }} تومان</p>
+          <p *ngIf="!item.discount || item.discount === 0">{{ item.price * item.quantity | number:'1.0-0' }} تومان</p>
         </div>
       </div>
-      <p>جمع کل: {{ getTotalPrice() }} تومان</p>
+      <p>جمع کل: {{ getTotalPrice() | number:'1.0-0' }} تومان</p>
     </div>
     <div class="delivery-type">
-      <h4>نوع تحویل</h4>
+      <h4><i class="fas fa-utensils"></i> نوع تحویل</h4>
       <label>
-        <input type="radio" [(ngModel)]="deliveryType" value="dine-in" checked> بیرون‌بر  
+        <input type="radio" [(ngModel)]="deliveryType" value="dine-in" checked> بیرون‌بر
+      </label>
       <label>
         <input type="radio" [(ngModel)]="deliveryType" value="takeaway"> داخل سالن
       </label>
-      </label>
     </div>
-    <button (click)="submitOrder()" class="btn-submit-order">ثبت سفارش</button>
-    <button (click)="goBack()" class="btn-close-cart">بازگشت</button>
+    <div class="checkout-actions">
+      <button (click)="submitOrder()" class="btn-submit-order"><i class="fas fa-check"></i> ثبت سفارش</button>
+      <button (click)="goBack()" class="btn-close-cart"><i class="fas fa-arrow-right"></i> بازگشت</button>
+    </div>
   </div>
-
-  <button *ngIf="currentView !== 'default'" (click)="goBack()" class="btn-close-cart">بازگشت</button>
 </div>

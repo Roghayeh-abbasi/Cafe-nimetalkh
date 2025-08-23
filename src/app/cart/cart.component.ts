@@ -1,4 +1,3 @@
-// src/app/cart/cart.component.ts
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -42,18 +41,37 @@ export class CartComponent implements OnInit, AfterViewInit {
     }
   }
 
-  removeFromCart(index: number): void {
-    this.cart.splice(index, 1);
-    this.cartService.clearCart();
-    this.cartService.getCart().push(...this.cart);
+  // افزایش تعداد محصول
+  increaseQuantity(index: number): void {
+    this.cart[index].quantity++;
+    this.cartService.updateCart(this.cart); // به‌روزرسانی سرویس
     this.calculateTotal();
   }
 
+  // کاهش تعداد محصول
+  decreaseQuantity(index: number): void {
+    if (this.cart[index].quantity > 1) {
+      this.cart[index].quantity--;
+    } else {
+      this.removeFromCart(index);
+    }
+    this.cartService.updateCart(this.cart); // به‌روزرسانی سرویس
+    this.calculateTotal();
+  }
+
+  // حذف محصول
+  removeFromCart(index: number): void {
+    this.cart.splice(index, 1);
+    this.cartService.updateCart(this.cart); // به‌روزرسانی سرویس
+    this.calculateTotal();
+  }
+
+  // محاسبه قیمت با احتساب تعداد
   getDiscountedPrice(product: Product): number {
     if (product.discount && product.discount > 0) {
-      return product.price * (1 - product.discount / 100);
+      return product.price * (1 - product.discount / 100) * product.quantity;
     }
-    return product.price;
+    return product.price * product.quantity;
   }
 
   calculateTotal(): void {

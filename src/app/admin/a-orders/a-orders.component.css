@@ -1,8 +1,9 @@
-/* a-orders.component.css */
+
+/* استایل‌های کانتینر سفارشات */
 .orders-container {
   direction: rtl;
   padding: 24px;
-  background: linear-gradient(135deg, #f5e6cc, #ffffff);
+  background: linear-gradient(135deg, var(--chamoisee), #ffffff);
   min-height: 100vh;
   font-family: 'Vazir', Arial, sans-serif;
   animation: fadeIn 0.5s ease-in-out;
@@ -12,7 +13,7 @@
 }
 
 h3 {
-  color: #2e1606;
+  color: var(--black-bean);
   margin-bottom: 24px;
   font-size: 1.75rem;
   font-weight: bold;
@@ -36,7 +37,7 @@ h3 {
   gap: 8px;
   text-align: right;
   font-size: 0.95rem;
-  color: #2e1606;
+  color: var(--black-bean);
   flex: 1;
 }
 
@@ -46,10 +47,34 @@ h3 {
 }
 
 .orders-count {
-  color: #2e1606;
+  color: var(--black-bean);
   font-size: 1rem;
   margin-bottom: 16px;
   text-align: right;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: var(--black-bean);
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(73, 15, 14, 0.1);
+}
+
+.orders-table th,
+.orders-table td {
+  border: 2px solid var(--bistre);
+  padding: 12px;
+  text-align: center;
+}
+
+.orders-table th {
+  background: var(--black-bean);
+  color:  #ffffff;
 }
 
 .orders-table th.sortable {
@@ -57,7 +82,7 @@ h3 {
 }
 
 .orders-table th.sortable:hover {
-  background: linear-gradient(90deg, #a58c61, #e6e0a3);
+  background: linear-gradient(90deg, var(--russet), var(--chamoisee));
 }
 
 .sort-icon {
@@ -66,21 +91,16 @@ h3 {
   font-size: 0.8rem;
 }
 
-.edit-controls, .button-group {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
-
 .no-orders {
   text-align: center;
   padding: 24px;
-  color: #2e1606;
+  color: var(--black-bean);
   font-size: 1rem;
 }
 
 .no-orders svg {
   margin-bottom: 12px;
+  fill: var(--russet);
 }
 
 .custom-alert {
@@ -90,11 +110,26 @@ h3 {
   z-index: 1000;
 }
 
+.custom-alert .alert-content {
+  background: var(--sepia);
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1rem;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* رسانه‌ها */
 @media (max-width: 1024px) {
   .orders-container {
     padding: 16px;
@@ -114,9 +149,16 @@ h3 {
     flex-direction: column;
   }
 
-  .edit-controls, .button-group {
-    flex-direction: column;
-    gap: 4px;
+  .orders-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 10px;
   }
 }
 

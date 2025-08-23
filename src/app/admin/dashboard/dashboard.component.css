@@ -1,6 +1,8 @@
+
+/* استایل‌های داشبورد */
 .dashboard {
   padding: 20px;
-  background: #f5f5f5;
+  background: var(--chamoisee);
   min-height: 100%;
   font-family: 'Vazir', Arial, sans-serif;
   direction: rtl;
@@ -17,7 +19,7 @@
   background: #ffffff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(73, 15, 14, 0.1);
   text-align: center;
   transition: transform 0.3s ease;
 }
@@ -37,9 +39,44 @@
   background: #ffffff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(73, 15, 14, 0.1);
 }
 
+.recent-activities, .quick-actions {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(73, 15, 14, 0.1);
+  margin-bottom: 24px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 8px 12px;
+  background: var(--sepia);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+  background: #4f2d0f;
+}
+
+h3 {
+  color: var(--black-bean);
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+/* رسانه‌ها */
 @media (max-width: 768px) {
   .dashboard {
     padding: 15px;
@@ -51,5 +88,11 @@
 
   .charts {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  h3 {
+    font-size: 1.25rem;
   }
 }

@@ -1,33 +1,47 @@
+/* تعریف متغیرهای رنگی */
+:root {
+  --black-bean: #531d06ff;
+  --sepia: #99582aff; 
+  --bistre: #432818ff;
+  --russet: #361705ff;
+  --chamoisee: rgb(143, 109, 82);
+}
+
+/* استایل‌های عمومی */
 * {
   box-sizing: border-box;
   font-family: 'Vazir', 'Roboto', Arial, sans-serif;
+  /* color:#b08968ff; */
+  font-size: 1rem;
 }
-
+.notification-count{
+  color: #ffffff;
+}
 .form-input, .search-input, .edit-input {
   padding: 12px;
-  border: 1px solid #E6D7A3;
+  border: 1px solid var(--bistre);
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
   font-size: 1rem;
-  color: #4A2C2A;
-  background-color: #FFFFFF;
+  color: var(--black-bean);
+  background: #ffffff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-input::placeholder, .search-input::placeholder, .edit-input::placeholder {
-  color: #A58C61;
+  color: var(--russet);
 }
 
 .form-input:focus, .search-input:focus, .edit-input:focus {
-  border-color: #A58C61;
-  box-shadow: 0 0 8px rgba(165, 140, 97, 0.3);
+  border-color: var(--sepia);
+  box-shadow: 0 0 8px rgba(104, 59, 20, 0.3);
   outline: none;
 }
 
 .form-input.invalid, .edit-input.invalid {
-  border-color: #A58C61;
-  box-shadow: 0 0 8px rgba(165, 140, 97, 0.3);
+  border-color: var(--sepia);
+  box-shadow: 0 0 8px rgba(104, 59, 20, 0.3);
 }
 
 .add-btn, .edit-btn, .save-btn, .cancel-btn, .delete-btn, .close-btn, .toggle-btn {
@@ -45,96 +59,96 @@
 }
 
 .add-btn, .edit-btn, .toggle-btn {
-  background: #A58C61;
-  color: #FFFFFF;
+  background: var(--sepia);
+  color: #ffffff;
 }
 
 .add-btn:hover, .edit-btn:hover, .toggle-btn:hover {
-  background: #E6D7A3;
+  background: #4f2d0f;
   transform: translateY(-2px);
 }
 
 .save-btn {
-  background: linear-gradient(90deg, #A58C61, #E6D7A3);
-  color: #4A2C2A;
+  background: linear-gradient(90deg, var(--russet), var(--chamoisee));
+  color:#ffffff;
 }
 
 .save-btn:hover {
-  background: linear-gradient(90deg, #E6D7A3, #A58C61);
+  background: linear-gradient(90deg, var(--chamoisee), var(--russet));
   transform: translateY(-2px);
 }
 
 .save-btn:disabled {
-  background: #E6D7A3;
-  color: #4A2C2A;
+  background: var(--chamoisee);
+  color: var(--black-bean);
   cursor: not-allowed;
 }
 
 .cancel-btn {
-  background: #FFFFFF;
-  color: #4A2C2A;
-  border: 1px solid #A58C61;
+  background: #ffffff;
+  color: var(--black-bean);
+  border: 1px solid var(--bistre);
 }
 
 .cancel-btn:hover {
-  background: #E6D7A3;
+  background: var(--chamoisee);
   transform: translateY(-2px);
 }
 
 .delete-btn, .close-btn {
-  background: #A58C61;
-  color: #FFFFFF;
+  background: var(--black-bean);
+  color:  #ffffff;
 }
 
 .delete-btn:hover, .close-btn:hover {
-  SPORT: #E6D7A3;
+  background: #2e0909;
   transform: translateY(-2px);
 }
 
 .alert-content {
   padding: 16px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(74, 44, 42, 0.2);
+  box-shadow: 0 4px 8px rgba(67, 40, 24, 0.2);
   max-width: 300px;
   text-align: center;
 }
 
 .alert-content.success {
-  background: linear-gradient(90deg, #A58C61, #E6D7A3);
-  color: #4A2C2A;
+  background: linear-gradient(90deg, var(--russet), var(--chamoisee));
+  color: var(--black-bean);
 }
 
 .alert-content.error {
-  background: #A58C61;
-  color: #FFFFFF;
+  background: var(--sepia);
+  color: #ffffff;
 }
 
 .table-shared {
   width: 100%;
   border-collapse: collapse;
   font-size: 1rem;
-  color: #4A2C2A;
-  background: #FFFFFF;
+  color: var(--black-bean);
+  background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(74, 44, 42, 0.15);
+  box-shadow: 0 6px 12px rgba(67, 40, 24, 0.15);
 }
 
 .table-shared th,
 .table-shared td {
-  border: 1px solid #E6D7A3;
+  border: 1px solid var(--bistre);
   padding: 16px;
   text-align: center;
 }
 
 .table-shared th {
-  background: linear-gradient(90deg, #A58C61, #E6D7A3);
-  color: #4A2C2A;
+  background: linear-gradient(90deg, var(--russet), var(--chamoisee));
+  color: var(--black-bean);
   font-weight: bold;
 }
 
 .table-shared tr:hover td {
-  background: rgba(165, 140, 97, 0.1);
+  background: rgba(118, 66, 29, 0.1);
 }
 
 @keyframes popIn {

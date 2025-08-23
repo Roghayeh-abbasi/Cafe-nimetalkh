@@ -7,6 +7,7 @@ import { AdminProductsComponent } from './a-products/a-products.component';
 import { AOrdersComponent } from './a-orders/a-orders.component';
 import { AUsersComponent } from './a-users/a-users.component';
 import { AReportsComponent } from './a-reports/a-reports.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'orders', component: AOrdersComponent },
       { path: 'users', component: AUsersComponent },
       { path: 'reports', component: AReportsComponent },
+      { path: 'settings', component: SettingsComponent},
     ]
   }
 ];
